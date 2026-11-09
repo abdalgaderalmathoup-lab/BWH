@@ -1,6 +1,6 @@
 (() => {
   const K = window.BWH_KNOWLEDGE;
-  const state = {lang: localStorage.getItem("bwh-lang") || "ar", currentSolution: null}; // جعلنا العربية هي الافتراضية
+  const state = {lang: localStorage.getItem("bwh-lang") || "ar", currentSolution: null};
   const $ = (id) => document.getElementById(id);
   const t = (key) => (I18N[state.lang] && I18N[state.lang][key]) || I18N.ar[key] || key;
   const field = (obj, base) => obj[base + (state.lang === "ar" ? "Ar" : "En")] || obj[base + "En"] || "";
@@ -14,7 +14,6 @@
     }
   };
 
-  // دالة تحديث حالة الشبكة
   function updateNetworkStatus() {
     const statusEl = $("networkStatus");
     if (!statusEl) return;
@@ -44,7 +43,7 @@
     renderDomains(); renderSolutions(); renderCommands(); renderQuickTopics();
     $("statSolutions").textContent = K.solutions.length;
     $("statDomains").textContent = K.domains.length;
-    updateNetworkStatus(); // تحديث المؤشر عند تغيير اللغة
+    updateNetworkStatus();
   }
 
   function domainName(id){ const d=K.domains.find(x=>x.id===id); return d?(state.lang==="ar"?d.ar:d.en):id; }
@@ -59,9 +58,30 @@
     $("domainFilter").innerHTML=`<option value="all">${t("allDomains")}</option>`+K.domains.map(d=>`<option value="${d.id}">${state.lang==="ar"?d.ar:d.en}</option>`).join("");
   }
   
+  // دالة بحث محسنة (تقسم الجملة لكلمات)
+  function isMatch(text, query) {
+    if (!query) return true;
+    // إزالة كلمات الحشو الشائعة لتسهيل البحث
+    const stopWords = ["كيفية", "طريقة", "شرح", "ما", "هي", "هو", "في", "من", "على", "عن", "إلى", "كيف", "how", "to", "the", "a", "an"];
+    const queryWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 1 && !stopWords.includes(w));
+    
+    if (queryWords.length === 0) return text.includes(query.toLowerCase());
+    
+    // التحقق من وجود كل كلمة (أو معظمها) في النص
+    const matches = queryWords.filter(word => text.includes(word));
+    return matches.length > 0; // يكفي أن تطابق كلمة واحدة قوية
+  }
+
   function renderSolutions(query=""){
-    const domain=$("domainFilter")?.value||"all"; const q=query.toLowerCase().trim();
-    const matches=K.solutions.filter(s=>(domain==="all"||s.domain===domain)&&(!q||[s.id,s.titleEn,s.titleAr,s.summaryEn,s.summaryAr,...s.symptoms].join(" ").toLowerCase().includes(q)));
+    const domain=$("domainFilter")?.value||"all"; 
+    const matches=K.solutions.filter(s=>{
+      if (domain !== "all" && s.domain !== domain) return false;
+      if (!query) return true;
+      
+      const searchableText = [s.id, s.titleEn, s.titleAr, s.summaryEn, s.summaryAr, ...(s.symptoms||[]), ...(s.causesEn||[]), ...(s.causesAr||[])].join(" ").toLowerCase();
+      return isMatch(searchableText, query);
+    });
+    
     $("solutionGrid").innerHTML=matches.length?matches.map(s=>`<article class="solution-card" data-solution="${s.id}"><span class="tag">${domainName(s.domain)} · ${s.id}</span><h3>${field(s,"title")}</h3><p>${field(s,"summary")}</p></article>`).join(""):`<div class="empty">${t("noResults")}</div>`;
     document.querySelectorAll(".solution-card").forEach(el=>el.addEventListener("click",()=>openDiagnosis(el.dataset.solution)));
   }
@@ -86,8 +106,16 @@
     $("diagnosisDetail").scrollIntoView({behavior:"smooth",block:"start"});
   }
   
+  // دالة البحث الرئيسية المحسنة
   function runSearch(){
-    const q=$("problemSearch").value.trim().toLowerCase(); const matches=K.solutions.filter(s=>[s.id,s.titleEn,s.titleAr,s.summaryEn,s.summaryAr,...s.symptoms,...s.causesEn,...s.causesAr].join(" ").toLowerCase().includes(q));
+    const q=$("problemSearch").value.trim();
+    if(!q) return;
+
+    const matches=K.solutions.filter(s=>{
+      const searchableText = [s.id, s.titleEn, s.titleAr, s.summaryEn, s.summaryAr, ...(s.symptoms||[]), ...(s.causesEn||[]), ...(s.causesAr||[])].join(" ").toLowerCase();
+      return isMatch(searchableText, q);
+    });
+    
     $("diagnosisResults").innerHTML=matches.length?matches.map(s=>`<div class="result-row" data-result="${s.id}"><div><h3>${field(s,"title")}</h3><p>${field(s,"summary")}</p></div><span class="tag">${domainName(s.domain)}</span></div>`).join(""):`<div class="empty">${t("noResults")}</div>`;
     document.querySelectorAll("[data-result]").forEach(el=>el.addEventListener("click",()=>openDiagnosis(el.dataset.result)));
     $("diagnosisDetail").innerHTML="";
@@ -100,7 +128,6 @@
     $("sidebar").classList.remove("open"); window.scrollTo({top:0,behavior:"smooth"});
   }
 
-  // Event Listeners
   document.querySelectorAll(".nav-item").forEach(n=>n.addEventListener("click",()=>showView(n.dataset.view)));
   document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.go)));
   $("langBtn").addEventListener("click",()=>{state.lang=state.lang==="en"?"ar":"en";localStorage.setItem("bwh-lang",state.lang);applyLanguage();});
@@ -110,11 +137,9 @@
   $("domainFilter").addEventListener("change",()=>renderSolutions($("librarySearch").value));
   $("menuBtn").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
   
-  // Network Listeners
   window.addEventListener("online", updateNetworkStatus);
   window.addEventListener("offline", updateNetworkStatus);
 
-  // Init
   applyLanguage();
   if("serviceWorker" in navigator && location.protocol.startsWith("http")){
     window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
