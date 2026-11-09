@@ -10,6 +10,119 @@ window.BWH_KNOWLEDGE = {
     {id:"replication",icon:"REP",en:"Replication",ar:"Replication",descEn:"Directory replication health.",descAr:"صحة تكرار بيانات الدليل."}
   ],
   solutions: [
+    /* --- الأدلة العشرة الجديدة المستخرجة من كود GPO Master Reference --- */
+    {
+      id:"GPO-SEC-01", domain:"gpo", titleEn:"1. Account & Password Security Policies", titleAr:"1. سياسات كلمات المرور وقفل الحسابات", 
+      summaryEn:"Enforce password length, complexity, and account lockout thresholds.", summaryAr:"فرض طول كلمة المرور وتعقيدها وحدود قفل الحسابات.", 
+      symptoms:["password policy","account lockout","كلمات المرور","قفل الحساب"], 
+      causesEn:["Access to GPMC (gpmc.msc).","Apply to Default Domain Policy."], causesAr:["الوصول إلى GPMC (gpmc.msc).","تطبق على Default Domain Policy."], 
+      stepsEn:["Path: Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies","Minimum password length: 12 to 14 Characters.","Password must meet complexity requirements: Enabled.","Enforce password history: 24 passwords remembered.","Account lockout threshold: 5 invalid attempts.","Account lockout duration: 15 or 30 Minutes."], 
+      stepsAr:["المسار: Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies","الحد الأدنى لطول كلمة المرور (Minimum password length): 12 إلى 14 حرفاً.","تعقيد كلمة المرور (Complexity): Enabled (مفعل).","تاريخ كلمة المرور (History): 24 كلمة مرور.","حد قفل الحساب (Lockout threshold): 5 محاولات خاطئة.","مدة قفل الحساب (Lockout duration): 15 أو 30 دقيقة."], 
+      verifyEn:"Run 'net accounts' in CMD.", verifyAr:"شغّل 'net accounts' في موجه الأوامر.", 
+      warningEn:"These policies apply to the entire domain.", warningAr:"هذه السياسات تطبق على الدومين بالكامل.", 
+      commands:["gpmc.msc","net accounts"], sources:["Microsoft Learn: Account Policies"]
+    },
+    {
+      id:"GPO-SYS-01", domain:"gpo", titleEn:"2. System Restrictions & Workstation Security", titleAr:"2. تقييد النظام ومحطات العمل", 
+      summaryEn:"Prevent access to CMD, Registry Editor, and Control Panel.", summaryAr:"منع الوصول لموجه الأوامر، محرر التسجيل، ولوحة التحكم.", 
+      symptoms:["block cmd","disable registry","restrict control panel","حظر cmd","تعطيل لوحة التحكم"], 
+      causesEn:["Access to GPMC.","Apply to User Configuration."], causesAr:["الوصول إلى GPMC.","تطبق على User Configuration."], 
+      stepsEn:["Path: User Configuration > Administrative Templates > System","Prevent access to the command prompt: Enabled.","Prevent access to registry editing tools: Enabled.","Prohibit access to Control Panel and PC settings: Enabled (Path: Control Panel)."], 
+      stepsAr:["المسار: User Configuration > Administrative Templates > System","منع الوصول لموجه الأوامر (Prevent access to the command prompt): Enabled.","منع أدوات التعديل (Prevent access to registry editing tools): Enabled.","حظر لوحة التحكم (Prohibit access to Control Panel): Enabled (المسار: Control Panel)."], 
+      verifyEn:"Log in as a standard user and try opening CMD or Regedit.", verifyAr:"سجل الدخول كمستخدم عادي وحاول فتح CMD أو Regedit.", 
+      warningEn:"Do not apply to IT Administrators to avoid locking yourself out.", warningAr:"لا تطبقها على مسؤولي IT لتجنب إغلاق حسابك.", 
+      commands:["gpmc.msc"], sources:["Microsoft Learn: System Policies"]
+    },
+    {
+      id:"GPO-LOCK-01", domain:"gpo", titleEn:"3. Screen Saver & Session Lockout", titleAr:"3. شاشة التوقف والقفل الأوتوماتيكي", 
+      summaryEn:"Force screen lock after inactivity to secure unattended PCs.", summaryAr:"إجبار قفل الشاشة بعد فترة خمول لتأمين الأجهزة غير المراقبة.", 
+      symptoms:["screen saver","lock pc","شاشة التوقف","قفل الجهاز"], 
+      causesEn:["Access to GPMC."], causesAr:["الوصول إلى GPMC."], 
+      stepsEn:["Path: User Configuration > Administrative Templates > Control Panel > Personalization","Enable screen saver: Enabled.","Password protect the screen saver: Enabled.","Screen saver timeout: Enabled (Value: 300 seconds = 5 mins)."], 
+      stepsAr:["المسار: User Configuration > Administrative Templates > Control Panel > Personalization","تفعيل شاشة التوقف (Enable screen saver): Enabled.","حماية الشاشة بكلمة مرور (Password protect...): Enabled.","مهلة شاشة التوقف (Timeout): Enabled (القيمة: 300 ثانية = 5 دقائق)."], 
+      verifyEn:"Leave the PC idle for 5 minutes and see if it locks.", verifyAr:"اترك الجهاز خاملاً لمدة 5 دقائق وتحقق من قفله.", 
+      warningEn:"Ensure it doesn't interrupt critical processes (e.g., presentations).", warningAr:"تأكد من أنها لا تقاطع العمليات الحرجة (مثل العروض التقديمية).", 
+      commands:["gpmc.msc"], sources:["Microsoft Learn: Security Policies"]
+    },
+    {
+      id:"GPO-USB-01", domain:"gpo", titleEn:"4. USB & Removable Media Restrictions", titleAr:"4. قيود وسائط التخزين والأجهزة الخارجية (USB)", 
+      summaryEn:"Block or restrict USB drives to prevent data leakage.", summaryAr:"حظر أو تقييد فلاشات USB لمنع تسريب البيانات.", 
+      symptoms:["block usb","disable usb","منع usb","حظر فلاشة"], 
+      causesEn:["Access to GPMC."], causesAr:["الوصول إلى GPMC."], 
+      stepsEn:["Path: Computer Configuration > Administrative Templates > System > Removable Storage Access","All Removable Storage classes: Deny all access: Enabled (Full block).","Removable Disks: Deny write access: Enabled (Read-only).","CD and DVD: Deny execute access: Enabled."], 
+      stepsAr:["المسار: Computer Configuration > Administrative Templates > System > Removable Storage Access","جميع فئات التخزين (Deny all access): Enabled (حظر كلي).","الأقراص القابلة للإزالة (Deny write access): Enabled (قراءة فقط).","أقراص CD/DVD (Deny execute access): Enabled."], 
+      verifyEn:"Insert a USB drive; it should be blocked.", verifyAr:"أدخل فلاشة USB؛ يجب أن يتم حظرها.", 
+      warningEn:"May block USB mice/keyboards if applied to all classes.", warningAr:"قد تحظر الفأرة ولوحة المفاتيح إذا طبقت على كل الفئات.", 
+      commands:["gpmc.msc","gpupdate /force"], sources:["Microsoft Learn: Removable Storage"]
+    },
+    {
+      id:"GPO-AUD-01", domain:"gpo", titleEn:"5. Advanced Audit Configuration", titleAr:"5. سياسات تدقيق ومراقبة الحوادث (Audit)", 
+      summaryEn:"Enable logging for security forensics and SIEM integration.", summaryAr:"تفعيل تسجيل الأحداث للتحليل الجنائي وتكامل SIEM.", 
+      symptoms:["audit policy","security logs","تدقيق الحوادث","سجلات الأمن"], 
+      causesEn:["Access to GPMC."], causesAr:["الوصول إلى GPMC."], 
+      stepsEn:["Path: Computer Configuration > Windows Settings > Security Settings > Advanced Audit Policy Configuration","Audit Logon: Success & Failure.","Audit Account Management: Success & Failure.","Audit Process Creation: Success.","Audit Privilege Use: Failure."], 
+      stepsAr:["المسار: Computer Configuration > Windows Settings > Security Settings > Advanced Audit Policy Configuration","تسجيل الدخول (Audit Logon): Success & Failure.","إدارة الحسابات (Audit Account Management): Success & Failure.","إنشاء العمليات (Audit Process Creation): Success.","استخدام الصلاحيات (Audit Privilege Use): Failure."], 
+      verifyEn:"Check Event Viewer > Windows Logs > Security for new events.", verifyAr:"افحص Event Viewer > Windows Logs > Security للأحداث الجديدة.", 
+      warningEn:"Generates large logs. Ensure you have sufficient disk space.", warningAr:"ينتج سجلات ضخمة. تأكد من كفاية مساحة القرص.", 
+      commands:["gpmc.msc","eventvwr.msc"], sources:["Microsoft Learn: Advanced Audit"]
+    },
+    {
+      id:"GPO-RDP-01", domain:"gpo", titleEn:"6. Remote Desktop (RDP) Security Policies", titleAr:"6. إدارة وتعزيز أمان سطح المكتب البعيد (RDP)", 
+      summaryEn:"Enforce NLA and SSL encryption for RDP connections.", summaryAr:"فرض NLA وتشفير SSL لاتصالات RDP.", 
+      symptoms:["rdp security","nla","أمان rdp","سطح المكتب البعيد"], 
+      causesEn:["Access to GPMC."], causesAr:["الوصول إلى GPMC."], 
+      stepsEn:["Path: Computer Configuration > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Security","Require use of specific security layer for remote (RDP) connections: SSL (TLS 1.0).","Require user authentication for remote connections by using NLA: Enabled.","Set time limit for active but idle Remote Desktop Services sessions: Enabled (15 mins)."], 
+      stepsAr:["المسار: Computer Configuration > Administrative Templates > Windows Components > Remote Desktop Services > Remote Desktop Session Host > Security","فرض طبقة أمان محددة (Specific security layer): SSL (TLS 1.0).","طلب مصادقة NLA (Require user authentication...): Enabled.","تحديد وقت للجلسات الخاملة (Set time limit...): Enabled (15 دقيقة)."], 
+      verifyEn:"Attempt an RDP connection; it should prompt for credentials first (NLA).", verifyAr:"حاول الاتصال بـ RDP؛ يجب أن يطلب بيانات الاعتماد أولاً (NLA).", 
+      warningEn:"Ensure clients support NLA before enforcing.", warningAr:"تأكد من دعم العملاء لـ NLA قبل الفرض.", 
+      commands:["gpmc.msc"], sources:["Microsoft Learn: RDP Security"]
+    },
+    {
+      id:"GPO-DEP-01", domain:"gpo", titleEn:"7. Software Deployment via MSI", titleAr:"7. التثبيت التلقائي للبرامج (MSI)", 
+      summaryEn:"Assign MSI packages to deploy automatically at startup.", summaryAr:"تعيين حزم MSI لتثبت تلقائياً عند بدء التشغيل.", 
+      symptoms:["deploy software","install msi","نشر برامج","تثبيت تلقائي"], 
+      causesEn:["MSI file in a shared folder with Read access for Domain Computers."], causesAr:["ملف MSI في مجلد مشترك بصلاحية قراءة لـ Domain Computers."], 
+      stepsEn:["Path: Computer Configuration > Policies > Software Settings > Software installation","Right-click > New > Package.","Select the UNC path (e.g., \\\\DC01\\SoftwareShare\\app.msi).","Choose 'Assigned' for silent install at boot."], 
+      stepsAr:["المسار: Computer Configuration > Policies > Software Settings > Software installation","اضغط بزر الفأرة الأيمن > New > Package.","اختر مسار UNC (مثلاً \\\\DC01\\SoftwareShare\\app.msi).","اختر 'Assigned' للتثبيت الصامت عند الإقلاع."], 
+      verifyEn:"Restart client PC and check Programs and Features.", verifyAr:"أعد تشغيل جهاز العميل وافحص قائمة البرامج.", 
+      warningEn:"Must use UNC path, not a local drive letter.", warningAr:"يجب استخدام مسار UNC، وليس حرف قرص محلي.", 
+      commands:["gpmc.msc"], sources:["Microsoft Learn: Software Deployment"]
+    },
+    {
+      id:"GPO-BRW-01", domain:"gpo", titleEn:"8. Browser Policies (Chrome & Edge)", titleAr:"8. سياسات متصفحات الإنترنت (Chrome & Edge)", 
+      summaryEn:"Enforce incognito blocking and homepage configuration.", summaryAr:"فرض حظر التصفح المتخفي وتهيئة الصفحة الرئيسية.", 
+      symptoms:["browser policy","block incognito","سياسات المتصفح","حظر التخفي"], 
+      causesEn:["ADMX templates imported to PolicyDefinitions folder."], causesAr:["استيراد قوالب ADMX إلى مجلد PolicyDefinitions."], 
+      stepsEn:["Path: Computer Configuration > Administrative Templates > Google Chrome / Microsoft Edge","IncognitoModeAvailability (Chrome) / InPrivateModeAvailability (Edge): Enabled (Disabled mode).","HomepageLocation: Set to company intranet URL.","ExtensionInstallForcelist: Add Extension IDs."], 
+      stepsAr:["المسار: Computer Configuration > Administrative Templates > Google Chrome / Microsoft Edge","حظر التصفح المتخفي (IncognitoModeAvailability): Enabled.","تحديد الصفحة الرئيسية (HomepageLocation): أدخل رابط الشركة.","فرض إضافات معينة (ExtensionInstallForcelist): أضف معرفات الإضافات."], 
+      verifyEn:"Open browser and check if incognito is disabled.", verifyAr:"افتح المتصفح وتحقق من تعطيل التصفح المتخفي.", 
+      warningEn:"Requires downloading ADMX templates from Google/Microsoft.", warningAr:"يتطلب تحميل قوالب ADMX من جوجل/مايكروسوفت.", 
+      commands:["gpmc.msc"], sources:["Microsoft Learn: Browser Policies"]
+    },
+    {
+      id:"GPO-WIFI-01", domain:"gpo", titleEn:"9. Enterprise Wi-Fi (802.1X)", titleAr:"9. سياسات شبكات اللاسلكي للمؤسسات (Wi-Fi 802.1X)", 
+      summaryEn:"Deploy WPA2-Enterprise Wi-Fi profiles automatically.", summaryAr:"توزيع إعدادات WPA2-Enterprise تلقائياً.", 
+      symptoms:["wifi policy","802.1x","سياسات الواي فاي","شبكات لاسلكية"], 
+      causesEn:["Access to GPMC.","Certificates for EAP-TLS (optional)."], causesAr:["الوصول إلى GPMC.","شهادات لـ EAP-TLS (اختياري)."], 
+      stepsEn:["Path: Computer Configuration > Policies > Windows Settings > Security Settings > Wireless Network (IEEE 802.11) Policies","Right-click > Create A New Wireless Network Policy...","Set SSID.","Security tab: Select WPA2-Enterprise and AES.","Network Authentication: PEAP or EAP-TLS."], 
+      stepsAr:["المسار: Computer Configuration > Policies > Windows Settings > Security Settings > Wireless Network (IEEE 802.11) Policies","اضغط بزر الفأرة الأيمن > إنشاء سياسة جديدة.","أدخل اسم الشبكة (SSID).","تبويب الأمان (Security): اختر WPA2-Enterprise و AES.","المصادقة (Authentication): PEAP أو EAP-TLS."], 
+      verifyEn:"Check available Wi-Fi networks on a client; it should auto-connect.", verifyAr:"تحقق من شبكات الواي فاي المتاحة على العميل؛ يجب أن يتصل تلقائياً.", 
+      warningEn:"Requires a RADIUS/NPS server for 802.1X authentication.", warningAr:"يتطلب خادم RADIUS/NPS لمصادقة 802.1X.", 
+      commands:["gpmc.msc"], sources:["Microsoft Learn: Wi-Fi Policies"]
+    },
+    {
+      id:"GPO-CLI-01", domain:"gpo", titleEn:"10. GPO CLI & Troubleshooting Commands", titleAr:"10. أوامر التطبيق والتحقق (CLI)", 
+      summaryEn:"Force update and generate GPO reports.", summaryAr:"إجبار التحديث وإنشاء تقارير GPO.", 
+      symptoms:["gpupdate","gpresult","تحديث السياسات","أوامر gpo"], 
+      causesEn:["Command Prompt access."], causesAr:["الوصول إلى موجه الأوامر."], 
+      stepsEn:["Run 'gpupdate /force' to apply policies immediately.","Run 'gpresult /r' to see applied policies.","Run 'gpresult /h C:\\GPO_Report.html' to generate an HTML report.","Run 'rsop.msc' for Resultant Set of Policy."], 
+      stepsAr:["شغّل 'gpupdate /force' لتطبيق السياسات فوراً.","شغّل 'gpresult /r' لعرض السياسات المطبقة.","شغّل 'gpresult /h C:\\GPO_Report.html' لإنشاء تقرير HTML.","شغّل 'rsop.msc' لعرض مجموعة النتائج (Resultant Set of Policy)."], 
+      verifyEn:"Check the output of each command.", verifyAr:"تحقق من مخرجات كل أمر.", 
+      warningEn:"Always run CMD as Administrator.", warningAr:"قم بتشغيل CMD كمسؤول دائماً.", 
+      commands:["gpupdate /force","gpresult /r","gpresult /h C:\\GPO_Report.html","rsop.msc"], sources:["Microsoft Learn: GPO CLI"]
+    },
+
+    /* --- الأدلة السابقة --- */
     {
       id:"AD-001", domain:"ad", titleEn:"Create a new User in Active Directory", titleAr:"إنشاء مستخدم جديد في Active Directory", 
       summaryEn:"Step-by-step to create a user, assign OU, and set password.", summaryAr:"خطوات إنشاء مستخدم، تعيينه في وحدة تنظيمية، وضبط كلمة المرور.", 
@@ -88,28 +201,6 @@ window.BWH_KNOWLEDGE = {
       commands:["domain.msc","netdom trust"], sources:["Microsoft Learn: AD Trusts"]
     },
     {
-      id:"GPO-001", domain:"gpo", titleEn:"Create a Domain Password Policy", titleAr:"إنشاء سياسة كلمات المرور للدومين", 
-      summaryEn:"Enforce password length, complexity, and expiration.", summaryAr:"فرض طول كلمة المرور وتعقيدها وتاريخ انتهائها.", 
-      symptoms:["password policy","complexity","سياسة كلمات المرور","تعقيد"], 
-      causesEn:["Access to GPMC (gpmc.msc)."], causesAr:["الوصول إلى GPMC (gpmc.msc)."], 
-      stepsEn:["Open (gpmc.msc).","Edit 'Default Domain Policy'.","Go to Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy.","Set 'Minimum password length' and enable complexity.","Run gpupdate /force."], 
-      stepsAr:["افتح (gpmc.msc).","قم بتعديل 'Default Domain Policy'.","انتقل إلى Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy.","اضبط 'Minimum password length' وفعّل التعقيد.","قم بتشغيل gpupdate /force."], 
-      verifyEn:"Run 'net accounts' in CMD.", verifyAr:"شغّل 'net accounts' في موجه الأوامر.", 
-      warningEn:"Affects all domain users.", warningAr:"يؤثر على جميع مستخدمي الدومين.", 
-      commands:["gpmc.msc","net accounts"], sources:["Microsoft Learn: Password Policy"]
-    },
-    {
-      id:"GPO-002", domain:"gpo", titleEn:"Block USB Storage Devices via GPO", titleAr:"حظر أجهزة USB عبر Group Policy", 
-      summaryEn:"Prevent users from using USB drives.", summaryAr:"منع استخدام فلاشات USB.", 
-      symptoms:["block usb","disable usb","منع usb","حظر فلاشة"], 
-      causesEn:["Access to GPMC."], causesAr:["الوصول إلى GPMC."], 
-      stepsEn:["Open GPMC > Create a GPO > Edit.","Navigate to: Computer Configuration > Policies > Administrative Templates > System > Removable Storage Access.","Enable 'All Removable Storage classes: Deny all access'.","Run gpupdate /force."], 
-      stepsAr:["افتح GPMC > أنشئ GPO > قم بتعديله.","انتقل إلى: Computer Configuration > Policies > Administrative Templates > System > Removable Storage Access.","قم بتفعيل 'All Removable Storage classes: Deny all access'.","شغّل gpupdate /force."], 
-      verifyEn:"Insert a USB drive; it should not appear.", verifyAr:"أدخل فلاشة USB؛ يجب ألا تظهر.", 
-      warningEn:"Blocks all external drives.", warningAr:"يحظر جميع الأقراص الخارجية.", 
-      commands:["gpmc.msc","gpupdate /force"], sources:["Microsoft Learn: Removable Storage Access"]
-    },
-    {
       id:"GPO-003", domain:"gpo", titleEn:"Map Network Drives automatically via GPO", titleAr:"ربط أقراص الشبكة تلقائياً عبر GPO", 
       summaryEn:"Assign a network drive to users automatically.", summaryAr:"تعيين قرص شبكة للمستخدمين تلقائياً.", 
       symptoms:["map drive","network drive","ربط قرص","مشاركة درايف"], 
@@ -130,17 +221,6 @@ window.BWH_KNOWLEDGE = {
       verifyEn:"Check Documents folder properties on client.", verifyAr:"تحقق من خصائص مجلد المستندات على العميل.", 
       warningEn:"Changing redirection can cause slow logins.", warningAr:"تغيير إعادة التوجيه قد يسبب بطئاً في تسجيل الدخول.", 
       commands:["gpmc.msc","gpupdate /force"], sources:["Microsoft Learn: Folder Redirection"]
-    },
-    {
-      id:"GPO-005", domain:"gpo", titleEn:"Deploy Software automatically via GPO", titleAr:"نشر البرامج تلقائياً عبر Group Policy", 
-      summaryEn:"Install an MSI application on all client PCs automatically.", summaryAr:"تثبيت تطبيق MSI على جميع أجهزة العملاء تلقائياً.", 
-      symptoms:["deploy software","install msi","نشر برامج","تثبيت تلقائي"], 
-      causesEn:["MSI file in a shared folder with 'Everyone: Read'.","GPMC access."], causesAr:["ملف MSI في مجلد مشترك بصلاحيات 'Everyone: Read'.","الوصول إلى GPMC."], 
-      stepsEn:["Copy .msi to a network share.","Open GPMC. Edit GPO linked to Computers OU.","Go to: Computer Configuration > Policies > Software Settings > Software Installation.","Right-click > New > Package.","Select MSI. Choose 'Assigned'.","gpupdate /force and restart."], 
-      stepsAr:["انسخ ملف .msi إلى مجلد مشترك.","افتح GPMC. قم بتعديل الـ GPO المرتبط بـ OU الأجهزة.","انتقل إلى: Computer Configuration > Policies > Software Settings > Software Installation.","اضغط بزر الفأرة الأيمن > New > Package.","اختر ملف MSI. اختر 'Assigned'.","شغّل gpupdate /force وأعد التشغيل."], 
-      verifyEn:"Restart client and check if installed.", verifyAr:"أعد تشغيل العميل وتحقق من التثبيت.", 
-      warningEn:"'Everyone' must have Read access to share and NTFS.", warningAr:"يجب أن تمتلك 'Everyone' صلاحية Read للمشاركة و NTFS.", 
-      commands:["gpmc.msc","gpupdate /force"], sources:["Microsoft Learn: Software Deployment"]
     },
     {
       id:"SRV-001", domain:"server", titleEn:"Install and Configure DHCP Server", titleAr:"تثبيت وإعداد خادم DHCP", 
@@ -371,6 +451,8 @@ window.BWH_KNOWLEDGE = {
     {titleEn:"Open ADUC",titleAr:"فتح ADUC",descEn:"Open Active Directory Users and Computers.",descAr:"فتح أداة المستخدمين والأجهزة.",cmd:"dsa.msc",safe:true},
     {titleEn:"Open GPMC",titleAr:"فتح GPMC",descEn:"Open Group Policy Management.",descAr:"فتح أداة إدارة السياسات.",cmd:"gpmc.msc",safe:true},
     {titleEn:"Test AD Port 389",titleAr:"اختبار منفذ AD 389",descEn:"Test connection to Domain Controller LDAP.",descAr:"اختبار الاتصال بـ LDAP.",cmd:"Test-NetConnection -ComputerName DC-IP -Port 389",safe:true},
-    {titleEn:"Show FSMO Roles",titleAr:"عرض أدوار FSMO",descEn:"Query FSMO role holders.",descAr:"استعلام عن حاملي أدوار FSMO.",cmd:"netdom query fsmo",safe:true}
+    {titleEn:"Show FSMO Roles",titleAr:"عرض أدوار FSMO",descEn:"Query FSMO role holders.",descAr:"استعلام عن حاملي أدوار FSMO.",cmd:"netdom query fsmo",safe:true},
+    {titleEn:"Generate GPO Report",titleAr:"إنشاء تقرير GPO",descEn:"Generate HTML report of applied GPOs.",descAr:"إنشاء تقرير HTML بالسياسات المطبقة.",cmd:"gpresult /h C:\\GPO_Report.html",safe:true},
+    {titleEn:"Show Resultant Set of Policy",titleAr:"عرض نتائج السياسات",descEn:"Open RSOP console.",descAr:"فتح وحدة تحكم RSOP.",cmd:"rsop.msc",safe:true}
   ]
 };
