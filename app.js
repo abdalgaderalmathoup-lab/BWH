@@ -54,23 +54,15 @@
     $("domainFilter").innerHTML=`<option value="all">${t("allDomains")}</option>`+K.domains.map(d=>`<option value="${d.id}">${state.lang==="ar"?d.ar:d.en}</option>`).join("");
   }
 
-  function isMatch(text, query) {
+  // بحث شامل جداً: يحول كامل الدليل إلى نص ويبحث فيه
+  function isMatch(obj, query) {
     if (!query) return true;
-    const normalizedText = text.toLowerCase();
-    const normalizedQuery = query.toLowerCase().trim();
+    const fullText = JSON.stringify(obj).toLowerCase();
+    const words = query.toLowerCase().split(/\s+/).filter(w => w.length > 1);
+    if (words.length === 0) return fullText.includes(query.toLowerCase());
     
-    if (normalizedText.includes(normalizedQuery)) return true;
-    
-    const stopWords = ["كيفية", "طريقة", "شرح", "ما", "هي", "هو", "في", "من", "على", "عن", "إلى", "كيف", "how", "to", "the", "a", "an"];
-    const queryWords = normalizedQuery.split(/\s+/).filter(w => w.length > 1 && !stopWords.includes(w));
-    
-    if (queryWords.length === 0) return false;
-    
-    let matchCount = 0;
-    for (const word of queryWords) {
-      if (normalizedText.includes(word)) matchCount++;
-    }
-    return matchCount >= Math.ceil(queryWords.length / 2);
+    // إذا وجد أي كلمة من كلمات البحث، يعرض الدليل
+    return words.some(word => fullText.includes(word));
   }
 
   function renderSolutions(query=""){
@@ -78,8 +70,7 @@
     const matches=K.solutions.filter(s=>{
       if (domain !== "all" && s.domain !== domain) return false;
       if (!query) return true;
-      const searchableText = [s.id, s.titleEn, s.titleAr, s.summaryEn, s.summaryAr, ...(s.symptoms||[]), ...(s.causesEn||[]), ...(s.causesAr||[])].join(" ").toLowerCase();
-      return isMatch(searchableText, query);
+      return isMatch(s, query);
     });
     
     $("solutionGrid").innerHTML=matches.length?matches.map(s=>`<article class="solution-card" data-solution="${s.id}"><span class="tag">${domainName(s.domain)} · ${s.id}</span><h3>${field(s,"title")}</h3><p>${field(s,"summary")}</p></article>`).join(""):`<div class="empty">${t("noResults")}</div>`;
@@ -109,10 +100,7 @@
   function runSearch(){
     const q=$("problemSearch").value.trim();
     if(!q) return;
-    const matches=K.solutions.filter(s=>{
-      const searchableText = [s.id, s.titleEn, s.titleAr, s.summaryEn, s.summaryAr, ...(s.symptoms||[]), ...(s.causesEn||[]), ...(s.causesAr||[])].join(" ").toLowerCase();
-      return isMatch(searchableText, q);
-    });
+    const matches=K.solutions.filter(s => isMatch(s, q));
     
     $("diagnosisResults").innerHTML=matches.length?matches.map(s=>`<div class="result-row" data-result="${s.id}"><div><h3>${field(s,"title")}</h3><p>${field(s,"summary")}</p></div><span class="tag">${domainName(s.domain)}</span></div>`).join(""):`<div class="empty">${t("noResults")}</div>`;
     document.querySelectorAll("[data-result]").forEach(el=>el.addEventListener("click",()=>openDiagnosis(el.dataset.result)));
