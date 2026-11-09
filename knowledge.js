@@ -10,74 +10,115 @@ window.BWH_KNOWLEDGE = {
     {id:"replication",icon:"REP",en:"Replication",ar:"Replication",descEn:"Directory replication health.",descAr:"صحة تكرار بيانات الدليل."}
   ],
   solutions: [
-    /* --- الأدلة الجديدة المستخرجة من وثيقة YSMO --- */
+    /* --- الموسوعة الهندسية الشاملة لسياسات الأمان (إعداد م. عبد القادر المذيوب) --- */
     {
-      id:"SEC-YSMO-01", domain:"security", titleEn:"Endpoint Hardening - Advanced Security Policies", titleAr:"حصانة أجهزة المستخدمين (Endpoint Hardening) - إعدادات متقدمة", 
-      summaryEn:"Enforce strict OS restrictions to prevent tampering and reduce attack surface. (Authored by Eng. Abdulqader Al-Mathyoub).", summaryAr:"فرض قيود صارمة على بيئة نظام التشغيل لمنع العبث وتقليص مساحة الهجوم الداخلي. (إعداد م. عبد القادر المذيوب - YSMO).", 
-      symptoms:["endpoint hardening","block cmd","disable task manager","حصانة الأجهزة","منع الأدوات"], 
-      causesEn:["Access to GPMC.","Apply to specific OUs (Non-IT users)."], causesAr:["الوصول إلى GPMC.","تطبق على OUs محددة (المستخدمين غير التقنيين)."], 
+      id:"GPO-ENC-01", domain:"security", titleEn:"Identity, Access Control & Auditing Policies", titleAr:"سياسات حماية الهوية والوصول والرقابة (Identity & Access)", 
+      summaryEn:"Comprehensive policies for passwords, account lockout, auditing, user rights, and security options.", summaryAr:"سياسات شاملة لكلمات المرور، قفل الحسابات، التدقيق، حقوق المستخدمين، وخيارات الأمان.", 
+      symptoms:["password policy","lockout","audit","user rights","كلمات المرور","قفل الحسابات","التدقيق"], 
+      causesEn:["Access to Default Domain Policy.","Domain Admin privileges."], causesAr:["الوصول إلى Default Domain Policy.","صلاحيات Domain Admin."], 
       stepsEn:[
-        "1. Block Task Manager: User Config > Admin Templates > System > Ctrl+Alt+Del Options -> Remove Task Manager = Enabled",
-        "2. Block Registry: User Config > Admin Templates > System -> Prevent access to registry editing tools = Enabled",
-        "3. Block CMD: User Config > Admin Templates > System -> Prevent access to the command prompt = Enabled",
-        "4. Block PowerShell: User Config > Admin Templates > System > Don't run specified Windows applications -> List: powershell.exe, powershell_ise.exe",
-        "5. Block Control Panel: User Config > Admin Templates > Control Panel -> Prohibit access to Control Panel = Enabled",
-        "6. Hide System Properties: User Config > Admin Templates > Control Panel -> Hide specified Control Panel items = Enabled (Add: Microsoft.System)",
-        "7. Block USB: Computer Config > Admin Templates > System > Removable Storage Access -> All Removable Storage classes: Deny all access = Enabled",
-        "8. Block Installer: Computer Config > Admin Templates > Windows Components > Windows Installer -> Turn off Windows Installer = Enabled",
-        "9. AppLocker: Computer Config > Windows Settings > Security Settings > Application Control Policies -> Executable Rules: Allow only Program Files & Windows folders.",
-        "10. Hide Local Drives: User Config > Admin Templates > Windows Components > File Explorer -> Hide specified drives & Restrict all drives = Enabled",
-        "11. Block Network Properties: User Config > Admin Templates > Network > Network Connections -> Prohibit access to properties of a LAN connection = Enabled",
-        "12. Block Sensitive Tools: AppLocker -> Script Rules & Executable Rules: Block mshta.exe, regsvr32.exe, certutil.exe"
+        "1. Password Policy: History=24, Max Age=90-180, Min Length=12-14, Complexity=Enabled.",
+        "2. Account Lockout: Threshold=5-10, Duration=30 mins, Reset Counter=30 mins.",
+        "3. Audit Policy: Enable Account Logon Events (Success, Failure) - Event 4624, 4625.",
+        "4. User Rights: Allow log on locally (Admins, Users), Allow RDP (Admins, RDP Users), Shut down system (Admins only).",
+        "5. Security Options: Interactive logon message (Legal warning), NTLM restrictions, SMB signing."
       ], 
       stepsAr:[
-        "1. منع مدير المهام: User Config > Admin Templates > System > Ctrl+Alt+Del Options -> Remove Task Manager = Enabled",
-        "2. منع محرر الريجستري: User Config > Admin Templates > System -> Prevent access to registry editing tools = Enabled",
-        "3. منع موجه الأوامر: User Config > Admin Templates > System -> Prevent access to the command prompt = Enabled",
-        "4. منع PowerShell: User Config > Admin Templates > System > Don't run specified Windows applications -> powershell.exe, powershell_ise.exe",
-        "5. منع لوحة التحكم: User Config > Admin Templates > Control Panel -> Prohibit access to Control Panel = Enabled",
-        "6. إخفاء خصائص النظام: User Config > Admin Templates > Control Panel -> Hide specified Control Panel items = Enabled (Add: Microsoft.System)",
-        "7. منع USB: Computer Config > Admin Templates > System > Removable Storage Access -> All Removable Storage classes: Deny all access = Enabled",
-        "8. منع التثبيت: Computer Config > Admin Templates > Windows Components > Windows Installer -> Turn off Windows Installer = Enabled",
-        "9. AppLocker (منع EXE): Computer Config > Windows Settings > Security Settings > Application Control Policies -> Allow only Program Files & Windows folders.",
-        "10. إخفاء الأقراص: User Config > Admin Templates > Windows Components > File Explorer -> Hide these specified drives & Restrict all drives = Enabled",
-        "11. منع الشبكة: User Config > Admin Templates > Network > Network Connections -> Prohibit access to properties of a LAN connection = Enabled",
-        "12. منع الأدوات الحساسة: AppLocker -> Block mshta.exe, regsvr32.exe, certutil.exe"
+        "1. سياسة كلمات المرور: History=24, Max Age=90-180, Min Length=12-14, Complexity=Enabled.",
+        "2. قفل الحسابات: Threshold=5-10, Duration=30 دقيقة, Reset Counter=30 دقيقة.",
+        "3. سياسات التدقيق: تفعيل Account Logon Events (Success, Failure) - Event 4624, 4625.",
+        "4. حقوق المستخدمين: Allow log on locally (Admins, Users), Allow RDP (Admins, RDP Users), Shut down system (Admins فقط).",
+        "5. خيارات الأمان: رسالة تحذير قانونية عند تسجيل الدخول، تقييد NTLM، تفعيل SMB signing."
       ], 
-      verifyEn:"Run gpresult /r and try to open blocked tools like CMD or Task Manager.", verifyAr:"قم بتشغيل gpresult /r وحاول فتح الأدوات المحظورة مثل CMD أو Task Manager للتأكد.", 
-      warningEn:"DO NOT apply to IT Admins or Domain Admins to avoid locking yourself out.", warningAr:"لا تطبق هذه السياسات على مسؤولي النظام (IT Admins) لتجنب إغلاق حسابك تماماً.", 
-      commands:["gpmc.msc","gpresult /r"], sources:["وثيقة الأمن السيبراني YSMO - إعداد المهندس عبد القادر حسين المذيوب"]
+      verifyEn:"Run 'net accounts' and check Event Viewer.", verifyAr:"شغّل 'net accounts' وافحص Event Viewer.", 
+      warningEn:"These policies apply to the entire domain. Test before deployment.", warningAr:"هذه السياسات تطبق على الدومين بالكامل. اختبرها قبل النشر.", 
+      commands:["gpmc.msc","net accounts","eventvwr.msc"], sources:["الموسوعة الهندسية لسياسات الأمان - إعداد م. عبد القادر حسين المذيوب"]
     },
     {
-      id:"SEC-YSMO-02", domain:"security", titleEn:"Domain-Wide & Infrastructure Security Policies", titleAr:"سياسات الأمان الشاملة للدومين والبنية التحتية", 
-      summaryEn:"Apply advanced security policies across the domain: Passwords, LAPS, BitLocker, Firewall, and WSUS.", summaryAr:"تطبيق السياسات الأمنية المتقدمة على مستوى النطاق: كلمات المرور، LAPS، BitLocker، الفايرول، و WSUS.", 
-      symptoms:["domain security","LAPS","BitLocker","WSUS","أمان الدومين","كلمات المرور"], 
-      causesEn:["Domain Admin privileges.","Access to GPMC and Server Manager."], causesAr:["صلاحيات Domain Admin.","الوصول إلى GPMC و Server Manager."], 
+      id:"GPO-ENC-02", domain:"security", titleEn:"Endpoint Protection (Defender & Firewall)", titleAr:"حماية نقاط النهاية (Defender والجدار الناري)", 
+      summaryEn:"Manage malware protection and network traffic rules.", summaryAr:"إدارة الحماية من البرمجيات الخبيثة وتنظيم حركة مرور الشبكة.", 
+      symptoms:["defender","firewall","antivirus","الجدار الناري","مكافحة الفيروسات"], 
+      causesEn:["Access to GPMC."], causesAr:["الوصول إلى GPMC."], 
       stepsEn:[
-        "1. Password Policy: Min length 12, Complexity enabled, History 24, Lockout 5 attempts / 30 mins.",
-        "2. Windows LAPS: Deploy and manage local admin passwords.",
-        "3. Restrict Local Admins: Use Restricted Groups to remove users from local Admin.",
-        "4. BitLocker: Enforce encryption and save recovery keys to AD.",
-        "5. Windows Firewall: Enforce Domain/Private/Public profiles and specific ports.",
-        "6. Advanced Auditing: Enable Logon/Logoff, Object Access, Privilege Use.",
-        "7. WSUS: Point clients to internal update server.",
-        "8. Folder Redirection: Redirect Desktop & Documents to network share.",
-        "9. Advanced Filtering: Use Security Filtering, WMI Filtering, Loopback Processing, and Central Store for ADMX."
+        "1. Microsoft Defender: Turn on real-time protection = Enabled.",
+        "2. Microsoft Defender: Scan all downloaded files and attachments = Enabled.",
+        "3. Microsoft Defender: Cloud-delivered protection = Enabled.",
+        "4. Firewall: Domain and Private profiles = Enabled (Enterprise).",
+        "5. Firewall Rules: Allow only necessary Inbound/Outbound (RDP, WinRM, WSUS)."
       ], 
       stepsAr:[
-        "1. سياسة المرور: Min length 12, Complexity enabled, History 24, Lockout 5 محاولات / 30 دقيقة.",
-        "2. Windows LAPS: تفعيل إدارة كلمات المرور المحلية للمسؤول.",
-        "3. تقييد المسؤولين: استخدام Restricted Groups لإزالة المستخدمين من مجموعة Admin المحلية.",
-        "4. BitLocker: فرض التشفير وحفظ مفاتيح الاسترداد في AD.",
-        "5. جدار الحماية: فرض حالة الجدار للشبكات (Domain/Private/Public) وتحديد المنافذ.",
-        "6. التدقيق المتقدم: تفعيل Logon, Object Access, Privilege Use.",
-        "7. WSUS: توجيه الأجهزة لخادم التحديثات المركزي.",
-        "8. إعادة توجيه المجلدات: توجيه Desktop و Documents لمجلد شبكي.",
-        "9. التصفية المتقدمة: استخدام Security Filtering, WMI Filtering, Loopback Processing, وإنشاء Central Store."
+        "1. Microsoft Defender: تفعيل الحماية الفورية (Real-time protection).",
+        "2. Microsoft Defender: فحص كافة التنزيلات والمرفقات (Scan downloads).",
+        "3. Microsoft Defender: الحماية السحابية (Cloud-delivered protection).",
+        "4. الجدار الناري: تفعيل ملفات Domain و Private.",
+        "5. قواعد الجدار: السماح فقط للخدمات الضرورية (RDP, WinRM, WSUS)."
       ], 
-      verifyEn:"Verify policies via Event Viewer, LAPS UI, and gpresult on client machines.", verifyAr:"تحقق من السياسات عبر Event Viewer و LAPS UI و gpresult على أجهزة العملاء.", 
-      warningEn:"Test Loopback Processing and Folder Redirection carefully, as they can cause slow logins or profile issues.", warningAr:"اختبر Loopback Processing وإعادة توجيه المجلدات بحذر، فقد تسبب بطئاً في الدخول أو مشاكل في الملفات الشخصية.", 
-      commands:["gpmc.msc","gpupdate /force","manage-bde -status"], sources:["وثيقة الأمن السيبراني YSMO - إعداد المهندس عبد القادر حسين المذيوب"]
+      verifyEn:"Check Windows Security dashboard on a client PC.", verifyAr:"افحص لوحة Windows Security على جهاز العميل.", 
+      warningEn:"Ensure firewall rules don't block domain communication.", warningAr:"تأكد من أن قواعد الجدار لا تحظر اتصال الدومين.", 
+      commands:["gpmc.msc","wf.msc"], sources:["الموسوعة الهندسية لسياسات الأمان - إعداد م. عبد القادر حسين المذيوب"]
+    },
+    {
+      id:"GPO-ENC-03", domain:"security", titleEn:"Infrastructure & Encryption (WSUS, BitLocker, 802.1X)", titleAr:"تحديثات الأنظمة والتشفير (WSUS, BitLocker, 802.1X)", 
+      summaryEn:"Centralized updates, drive encryption, and secure network access.", summaryAr:"تحديثات مركزية، تشفير الأقراص، والتحكم الدقيق في الشبكات.", 
+      symptoms:["wsus","bitlocker","802.1x","تحديثات","تشفير","واي فاي"], 
+      causesEn:["WSUS Server configured.","TPM chips on clients.","RADIUS server for 802.1X."], causesAr:["خادم WSUS مهيأ.","شرائح TPM على الأجهزة.","خادم RADIUS لـ 802.1X."], 
+      stepsEn:[
+        "1. WSUS: Point to local server (http://WSUS_Server:8530). Set Auto download and schedule install.",
+        "2. BitLocker: Require additional authentication at startup (TPM).",
+        "3. BitLocker: Store recovery info in AD DS automatically.",
+        "4. 802.1X: Enable protocol to authenticate devices before allowing network access."
+      ], 
+      stepsAr:[
+        "1. WSUS: التوجيه لخادم محلي (http://WSUS_Server:8530). جدولة التنزيل والتثبيت التلقائي.",
+        "2. BitLocker: طلب مصادقة إضافية عند بدء التشغيل (TPM).",
+        "3. BitLocker: حفظ مفاتيح الاسترداد في AD DS تلقائياً.",
+        "4. 802.1X: تفعيل البروتوكول لمصادقة الأجهزة قبل السماح بالوصول للشبكة."
+      ], 
+      verifyEn:"Check Windows Update and BitLocker status on client.", verifyAr:"افحص حالة التحديثات و BitLocker على العميل.", 
+      warningEn:"Ensure WSUS server is reachable. BitLocker requires TPM or USB key.", warningAr:"تأكد من الوصول لخادم WSUS. BitLocker يتطلب TPM أو مفتاح USB.", 
+      commands:["gpmc.msc","manage-bde -status"], sources:["الموسوعة الهندسية لسياسات الأمان - إعداد م. عبد القادر حسين المذيوب"]
+    },
+    {
+      id:"GPO-ENC-04", domain:"security", titleEn:"Data, File & Application Security (AppLocker, Redirection)", titleAr:"حماية البيانات والتطبيقات (AppLocker وإعادة التوجيه)", 
+      summaryEn:"Secure user data and block unauthorized software.", summaryAr:"تأمين بيانات المستخدمين وحظر تشغيل البرامج غير المصرح بها.", 
+      symptoms:["applocker","folder redirection","agdlp","حظر برامج","إعادة توجيه"], 
+      causesEn:["File Server prepared.","Access to GPMC."], causesAr:["خادم ملفات جاهز.","الوصول إلى GPMC."], 
+      stepsEn:[
+        "1. Folder Redirection: Redirect Desktop & Documents to File Server.",
+        "2. Drive Mapping: Use GPP with Item-level targeting (Security Groups).",
+        "3. File Server Permissions: Apply AGDLP model (Accounts -> Global -> Domain Local -> Permissions).",
+        "4. AppLocker: Create Executable Rules to allow only C:\\Windows and C:\\Program Files."
+      ], 
+      stepsAr:[
+        "1. إعادة توجيه المجلدات: توجيه Desktop و Documents لخادم الملفات.",
+        "2. ربط الأقراص: استخدام GPP مع Item-level targeting (حسب مجموعات الأمان).",
+        "3. صلاحيات خادم الملفات: تطبيق قاعدة AGDLP (حسابات -> مجموعات عالمية -> محلية -> صلاحيات).",
+        "4. AppLocker: إنشاء قواعد لمنع تشغيل EXE إلا من مسارات C:\\Windows و C:\\Program Files."
+      ], 
+      verifyEn:"Try running an EXE from USB/Downloads (should be blocked). Check redirected folders.", verifyAr:"حاول تشغيل EXE من فلاشة أو مجلد التنزيلات (يجب حظره). افحص المجلدات الموجهة.", 
+      warningEn:"Test AppLocker in Audit Mode before Enforcing to avoid blocking critical apps.", warningAr:"اختبر AppLocker في وضع التدقيق (Audit) قبل الفرض لتجنب حظر التطبيقات الحيوية.", 
+      commands:["gpmc.msc"], sources:["الموسوعة الهندسية لسياسات الأمان - إعداد م. عبد القادر حسين المذيوب"]
+    },
+    {
+      id:"GPO-ENC-05", domain:"security", titleEn:"Deployment & UI Restrictions (Software, GPP, Admin Templates)", titleAr:"نشر البرامج وتقييد واجهة المستخدم (GPP والإعدادات)", 
+      summaryEn:"Deploy software/printers centrally and restrict OS features.", summaryAr:"نشر البرامج والطابعات مركزياً وتقييد ميزات نظام التشغيل.", 
+      symptoms:["deploy software","deploy printers","disable cmd","hide drives","نشر برامج","حظر cmd","إخفاء أقراص"], 
+      causesEn:["Access to GPMC."], causesAr:["الوصول إلى GPMC."], 
+      stepsEn:[
+        "1. Software Deployment: Use .msi packages in a shared folder (Assigned).",
+        "2. Printer Deployment: Deploy via GPO to users/computers.",
+        "3. GPP: Use for Registry Keys, Local Users (Use LAPS to avoid cpassword vulnerability), and Shortcuts.",
+        "4. Admin Templates: Disable Autoplay, Block CMD/Registry, Hide Control Panel, Hide local drives (C:), Disable PowerShell for standard users."
+      ], 
+      stepsAr:[
+        "1. نشر البرامج: استخدام حزم .msi في مجلد مشترك (Assigned).",
+        "2. نشر الطابعات: تعريفها ونشرها عبر GPO للمستخدمين/الأجهزة.",
+        "3. التفضيلات (GPP): لإنشاء مفاتيح ريجستري، مستخدمين محليين (استخدم LAPS لتجنب ثغرة cpassword)، واختصارات.",
+        "4. القوالب الإدارية: تعطيل التشغيل التلقائي (Autoplay)، حظر CMD والريجستري، إخفاء لوحة التحكم، إخفاء الأقراص المحلية (C:)، وتعطيل PowerShell للمستخدمين العاديين."
+      ], 
+      verifyEn:"Verify software installation, printer availability, and restricted UI.", verifyAr:"تحقق من تثبيت البرامج، توفر الطابعات، وقيود واجهة المستخدم.", 
+      warningEn:"Ensure GPP local admin passwords are managed by LAPS.", warningAr:"تأكد من إدارة كلمات مرور المسؤول المحلي في GPP بواسطة LAPS.", 
+      commands:["gpmc.msc","gpupdate /force"], sources:["الموسوعة الهندسية لسياسات الأمان - إعداد م. عبد القادر حسين المذيوب"]
     },
     /* --- الأدلة السابقة (GPO Master Reference) --- */
     {
