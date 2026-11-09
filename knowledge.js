@@ -10,7 +10,76 @@ window.BWH_KNOWLEDGE = {
     {id:"replication",icon:"REP",en:"Replication",ar:"Replication",descEn:"Directory replication health.",descAr:"صحة تكرار بيانات الدليل."}
   ],
   solutions: [
-    /* --- الأدلة العشرة الجديدة المستخرجة من كود GPO Master Reference --- */
+    /* --- الأدلة الجديدة المستخرجة من وثيقة YSMO --- */
+    {
+      id:"SEC-YSMO-01", domain:"security", titleEn:"Endpoint Hardening - Advanced Security Policies", titleAr:"حصانة أجهزة المستخدمين (Endpoint Hardening) - إعدادات متقدمة", 
+      summaryEn:"Enforce strict OS restrictions to prevent tampering and reduce attack surface. (Authored by Eng. Abdulqader Al-Mathyoub).", summaryAr:"فرض قيود صارمة على بيئة نظام التشغيل لمنع العبث وتقليص مساحة الهجوم الداخلي. (إعداد م. عبد القادر المذيوب - YSMO).", 
+      symptoms:["endpoint hardening","block cmd","disable task manager","حصانة الأجهزة","منع الأدوات"], 
+      causesEn:["Access to GPMC.","Apply to specific OUs (Non-IT users)."], causesAr:["الوصول إلى GPMC.","تطبق على OUs محددة (المستخدمين غير التقنيين)."], 
+      stepsEn:[
+        "1. Block Task Manager: User Config > Admin Templates > System > Ctrl+Alt+Del Options -> Remove Task Manager = Enabled",
+        "2. Block Registry: User Config > Admin Templates > System -> Prevent access to registry editing tools = Enabled",
+        "3. Block CMD: User Config > Admin Templates > System -> Prevent access to the command prompt = Enabled",
+        "4. Block PowerShell: User Config > Admin Templates > System > Don't run specified Windows applications -> List: powershell.exe, powershell_ise.exe",
+        "5. Block Control Panel: User Config > Admin Templates > Control Panel -> Prohibit access to Control Panel = Enabled",
+        "6. Hide System Properties: User Config > Admin Templates > Control Panel -> Hide specified Control Panel items = Enabled (Add: Microsoft.System)",
+        "7. Block USB: Computer Config > Admin Templates > System > Removable Storage Access -> All Removable Storage classes: Deny all access = Enabled",
+        "8. Block Installer: Computer Config > Admin Templates > Windows Components > Windows Installer -> Turn off Windows Installer = Enabled",
+        "9. AppLocker: Computer Config > Windows Settings > Security Settings > Application Control Policies -> Executable Rules: Allow only Program Files & Windows folders.",
+        "10. Hide Local Drives: User Config > Admin Templates > Windows Components > File Explorer -> Hide specified drives & Restrict all drives = Enabled",
+        "11. Block Network Properties: User Config > Admin Templates > Network > Network Connections -> Prohibit access to properties of a LAN connection = Enabled",
+        "12. Block Sensitive Tools: AppLocker -> Script Rules & Executable Rules: Block mshta.exe, regsvr32.exe, certutil.exe"
+      ], 
+      stepsAr:[
+        "1. منع مدير المهام: User Config > Admin Templates > System > Ctrl+Alt+Del Options -> Remove Task Manager = Enabled",
+        "2. منع محرر الريجستري: User Config > Admin Templates > System -> Prevent access to registry editing tools = Enabled",
+        "3. منع موجه الأوامر: User Config > Admin Templates > System -> Prevent access to the command prompt = Enabled",
+        "4. منع PowerShell: User Config > Admin Templates > System > Don't run specified Windows applications -> powershell.exe, powershell_ise.exe",
+        "5. منع لوحة التحكم: User Config > Admin Templates > Control Panel -> Prohibit access to Control Panel = Enabled",
+        "6. إخفاء خصائص النظام: User Config > Admin Templates > Control Panel -> Hide specified Control Panel items = Enabled (Add: Microsoft.System)",
+        "7. منع USB: Computer Config > Admin Templates > System > Removable Storage Access -> All Removable Storage classes: Deny all access = Enabled",
+        "8. منع التثبيت: Computer Config > Admin Templates > Windows Components > Windows Installer -> Turn off Windows Installer = Enabled",
+        "9. AppLocker (منع EXE): Computer Config > Windows Settings > Security Settings > Application Control Policies -> Allow only Program Files & Windows folders.",
+        "10. إخفاء الأقراص: User Config > Admin Templates > Windows Components > File Explorer -> Hide these specified drives & Restrict all drives = Enabled",
+        "11. منع الشبكة: User Config > Admin Templates > Network > Network Connections -> Prohibit access to properties of a LAN connection = Enabled",
+        "12. منع الأدوات الحساسة: AppLocker -> Block mshta.exe, regsvr32.exe, certutil.exe"
+      ], 
+      verifyEn:"Run gpresult /r and try to open blocked tools like CMD or Task Manager.", verifyAr:"قم بتشغيل gpresult /r وحاول فتح الأدوات المحظورة مثل CMD أو Task Manager للتأكد.", 
+      warningEn:"DO NOT apply to IT Admins or Domain Admins to avoid locking yourself out.", warningAr:"لا تطبق هذه السياسات على مسؤولي النظام (IT Admins) لتجنب إغلاق حسابك تماماً.", 
+      commands:["gpmc.msc","gpresult /r"], sources:["وثيقة الأمن السيبراني YSMO - إعداد المهندس عبد القادر حسين المذيوب"]
+    },
+    {
+      id:"SEC-YSMO-02", domain:"security", titleEn:"Domain-Wide & Infrastructure Security Policies", titleAr:"سياسات الأمان الشاملة للدومين والبنية التحتية", 
+      summaryEn:"Apply advanced security policies across the domain: Passwords, LAPS, BitLocker, Firewall, and WSUS.", summaryAr:"تطبيق السياسات الأمنية المتقدمة على مستوى النطاق: كلمات المرور، LAPS، BitLocker، الفايرول، و WSUS.", 
+      symptoms:["domain security","LAPS","BitLocker","WSUS","أمان الدومين","كلمات المرور"], 
+      causesEn:["Domain Admin privileges.","Access to GPMC and Server Manager."], causesAr:["صلاحيات Domain Admin.","الوصول إلى GPMC و Server Manager."], 
+      stepsEn:[
+        "1. Password Policy: Min length 12, Complexity enabled, History 24, Lockout 5 attempts / 30 mins.",
+        "2. Windows LAPS: Deploy and manage local admin passwords.",
+        "3. Restrict Local Admins: Use Restricted Groups to remove users from local Admin.",
+        "4. BitLocker: Enforce encryption and save recovery keys to AD.",
+        "5. Windows Firewall: Enforce Domain/Private/Public profiles and specific ports.",
+        "6. Advanced Auditing: Enable Logon/Logoff, Object Access, Privilege Use.",
+        "7. WSUS: Point clients to internal update server.",
+        "8. Folder Redirection: Redirect Desktop & Documents to network share.",
+        "9. Advanced Filtering: Use Security Filtering, WMI Filtering, Loopback Processing, and Central Store for ADMX."
+      ], 
+      stepsAr:[
+        "1. سياسة المرور: Min length 12, Complexity enabled, History 24, Lockout 5 محاولات / 30 دقيقة.",
+        "2. Windows LAPS: تفعيل إدارة كلمات المرور المحلية للمسؤول.",
+        "3. تقييد المسؤولين: استخدام Restricted Groups لإزالة المستخدمين من مجموعة Admin المحلية.",
+        "4. BitLocker: فرض التشفير وحفظ مفاتيح الاسترداد في AD.",
+        "5. جدار الحماية: فرض حالة الجدار للشبكات (Domain/Private/Public) وتحديد المنافذ.",
+        "6. التدقيق المتقدم: تفعيل Logon, Object Access, Privilege Use.",
+        "7. WSUS: توجيه الأجهزة لخادم التحديثات المركزي.",
+        "8. إعادة توجيه المجلدات: توجيه Desktop و Documents لمجلد شبكي.",
+        "9. التصفية المتقدمة: استخدام Security Filtering, WMI Filtering, Loopback Processing, وإنشاء Central Store."
+      ], 
+      verifyEn:"Verify policies via Event Viewer, LAPS UI, and gpresult on client machines.", verifyAr:"تحقق من السياسات عبر Event Viewer و LAPS UI و gpresult على أجهزة العملاء.", 
+      warningEn:"Test Loopback Processing and Folder Redirection carefully, as they can cause slow logins or profile issues.", warningAr:"اختبر Loopback Processing وإعادة توجيه المجلدات بحذر، فقد تسبب بطئاً في الدخول أو مشاكل في الملفات الشخصية.", 
+      commands:["gpmc.msc","gpupdate /force","manage-bde -status"], sources:["وثيقة الأمن السيبراني YSMO - إعداد المهندس عبد القادر حسين المذيوب"]
+    },
+    /* --- الأدلة السابقة (GPO Master Reference) --- */
     {
       id:"GPO-SEC-01", domain:"gpo", titleEn:"1. Account & Password Security Policies", titleAr:"1. سياسات كلمات المرور وقفل الحسابات", 
       summaryEn:"Enforce password length, complexity, and account lockout thresholds.", summaryAr:"فرض طول كلمة المرور وتعقيدها وحدود قفل الحسابات.", 
@@ -121,8 +190,7 @@ window.BWH_KNOWLEDGE = {
       warningEn:"Always run CMD as Administrator.", warningAr:"قم بتشغيل CMD كمسؤول دائماً.", 
       commands:["gpupdate /force","gpresult /r","gpresult /h C:\\GPO_Report.html","rsop.msc"], sources:["Microsoft Learn: GPO CLI"]
     },
-
-    /* --- الأدلة السابقة --- */
+    /* --- الأدلة السابقة (AD, Server, Network, etc.) --- */
     {
       id:"AD-001", domain:"ad", titleEn:"Create a new User in Active Directory", titleAr:"إنشاء مستخدم جديد في Active Directory", 
       summaryEn:"Step-by-step to create a user, assign OU, and set password.", summaryAr:"خطوات إنشاء مستخدم، تعيينه في وحدة تنظيمية، وضبط كلمة المرور.", 
