@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10233f">
+  <meta name="theme-color" content="#0f172a">
   <meta name="description" content="المذيوب — دليل الإدارة الشخصي للمهندس عبد القادر حسين المذيوب.">
   <title>المذيوب | دليل الإدارة الشخصي</title>
   <link rel="manifest" href="manifest.json">
@@ -18,6 +18,7 @@
         <span class="brand-mark">م</span>
         <span><strong data-i18n="appName">المذيوب</strong><small data-i18n="brandSub">دليل الإدارة الشخصي</small></span>
       </a>
+      
       <div class="side-label" data-i18n="workspace">مساحة العمل</div>
       <nav class="nav-list">
         <button class="nav-item active" data-view="dashboard"><span>▦</span><span data-i18n="dashboard">لوحة التحكم</span></button>
@@ -26,10 +27,17 @@
         <button class="nav-item" data-view="powershell"><span>›_</span><span data-i18n="powershell">مرجع PowerShell</span></button>
         <button class="nav-item" data-view="topics"><span>◈</span><span data-i18n="topics">مجالات المعرفة</span></button>
       </nav>
+
       <div class="side-label" data-i18n="system">النظام</div>
       <nav class="nav-list">
         <button class="nav-item" data-view="about"><span>ⓘ</span><span data-i18n="about">حول التطبيق</span></button>
+        
+        <!-- زر تنظيف الكاش الجديد -->
+        <button class="nav-item clear-cache-btn" id="clearCacheBtn">
+          <span>🧹</span><span data-i18n="clearCache">تنظيف الكاش (تحديث)</span>
+        </button>
       </nav>
+
       <div class="sidebar-foot">
         <span class="status-dot"></span>
         <span data-i18n="credit">إعداد م. عبد القادر حسين المذيوب</span>
@@ -52,11 +60,10 @@
       <!-- لوحة التحكم -->
       <section class="view active" id="view-dashboard">
         <div class="hero">
-          <div>
+          <div class="hero-content">
             <div class="eyebrow" data-i18n="heroEyebrow">دليل الإدارة الشخصي</div>
             <h1 data-i18n="heroTitle">إدارة باحترافية.<br>وتهيئة بثقة.</h1>
             
-            <!-- التوقيع الشخصي -->
             <div class="credit-banner">
               <h3>إعداد المهندس / عبد القادر حسين المذيوب</h3>
               <p>مهندس أمن المعلومة</p>
@@ -66,23 +73,21 @@
             <button class="primary-btn" data-go="troubleshoot" data-i18n="startDiagnosis">ابدأ البحث في أدلتي <span>→</span></button>
           </div>
           <div class="hero-art" aria-hidden="true">
-            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="glow-circle"></div>
             <div class="core">م<span>ADMIN</span></div>
-            <b class="node node-a">AD</b><b class="node node-b">DNS</b><b class="node node-c">GPO</b><b class="node node-d">PS</b>
           </div>
         </div>
 
-        <div class="section-head"><div><div class="eyebrow" data-i18n="overview">نظرة عامة</div><h2 data-i18n="knowledgeAtGlance">قاعدة معرفتي</h2></div><span class="subtle" data-i18n="starterContent">حزمة الإدارة الشخصية</span></div>
+        <div class="section-head"><div><div class="eyebrow" data-i18n="overview">نظرة عامة</div><h2 data-i18n="knowledgeAtGlance">قاعدة معرفتي</h2></div></div>
         <div class="stats-grid">
           <article class="stat-card"><span class="stat-icon blue">▤</span><div><strong id="statSolutions">0</strong><small data-i18n="solutions">أدلة الإدارة</small></div></article>
           <article class="stat-card"><span class="stat-icon purple">⌘</span><div><strong id="statDomains">0</strong><small data-i18n="domains">مجالات المعرفة</small></div></article>
           <article class="stat-card"><span class="stat-icon green">✓</span><div><strong data-i18n="noAiValue">بدون AI</strong><small data-i18n="noAi">أدلة حتمية</small></div></article>
-          <article class="stat-card"><span class="stat-icon amber">☁</span><div><strong data-i18n="cloudReadyValue">سحابي</strong><small data-i18n="cloudReady">جاهز للعمل دون اتصال</small></div></article>
+          <article class="stat-card"><span class="stat-icon amber">☁</span><div><strong data-i18n="cloudReadyValue">سحابي</strong><small data-i18n="cloudReady">جاهز دون اتصال</small></div></article>
         </div>
 
         <div class="section-head"><div><div class="eyebrow" data-i18n="browse">تصفح</div><h2 data-i18n="popularDomains">مجالات المعرفة</h2></div></div>
         <div class="domain-grid" id="domainGrid"></div>
-        <div class="notice"><strong data-i18n="important">مهم:</strong> <span data-i18n="noticeText">هذا التطبيق مرجع شخصي. تحقق دائماً من الأوامر وخذ نسخاً احتياطية قبل إجراء التغييرات.</span></div>
       </section>
 
       <!-- صفحة البحث -->
@@ -90,7 +95,7 @@
         <div class="page-intro"><div class="eyebrow" data-i18n="guidedDiagnosis">البحث</div><h1 data-i18n="troubleshootTitle">ماذا تريد أن تفعل؟</h1><p data-i18n="troubleshootIntro">ابحث في قاعدة المعرفة أو اختر موضوعاً لاتباع دليل إداري منظم.</p></div>
         <div class="search-panel">
           <span class="search-symbol">⌕</span>
-          <input id="problemSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="ابحث عن دليل، إعداد، أو تهيئة...">
+          <input id="problemSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="ابحث عن دليل...">
           <button class="primary-btn" id="searchBtn" data-i18n="search">بحث</button>
         </div>
         <div class="filter-row"><span data-i18n="suggestedTopics">موضوعات مقترحة</span><div id="quickTopics" class="quick-topics"></div></div>
