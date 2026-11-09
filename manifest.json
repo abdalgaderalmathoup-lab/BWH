@@ -1,7 +1,7 @@
 {
-  "name": "BWH Knowledge System",
-  "short_name": "BWH",
-  "description": "BWH — bilingual, rule-based Active Directory and Windows Server troubleshooting knowledge system.",
+  "name": "المذيوب - دليل الإدارة الشخصي",
+  "short_name": "المذيوب",
+  "description": "دليل الإدارة الشخصي للمهندس عبد القادر حسين المذيوب.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
