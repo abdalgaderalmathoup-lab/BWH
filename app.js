@@ -6,12 +6,8 @@
   const field = (obj, base) => obj[base + (state.lang === "ar" ? "Ar" : "En")] || obj[base + "En"] || "";
 
   const I18N = {
-    en: {
-      appName: "Al-Mathyoub", brandSub: "Personal Admin Playbook", workspace: "WORKSPACE", dashboard: "Dashboard", troubleshoot: "Search Guides", solutions: "Full Knowledge Base", powershell: "PowerShell Reference", topics: "Knowledge Domains", system: "SYSTEM", about: "About", offlineReady: "Offline-ready", credit: "Prepared by Eng. Abdulqader H. Al-Mathyoub", ruleBased: "Personal Reference", heroEyebrow: "PERSONAL IT ENCYCLOPEDIA", heroTitle: "Administer with clarity.<br>Configure with confidence.", heroText: "A structured technical knowledge base for Active Directory, Windows Server, and Networking administration.", startDiagnosis: "Search my guides", overview: "OVERVIEW", knowledgeAtGlance: "My Knowledge Base", starterContent: "Personal Admin Pack", domains: "Knowledge domains", noAiValue: "No AI", noAi: "Deterministic guides", cloudReadyValue: "Cloud", cloudReady: "Offline-ready", browse: "BROWSE", popularDomains: "Knowledge Domains", important: "Important:", noticeText: "This is a personal administration reference tool. Always validate commands and back up systems before making changes.", guidedDiagnosis: "SEARCH", troubleshootTitle: "What are you trying to do?", troubleshootIntro: "Search the knowledge base or select a topic to follow a structured administrative guide.", searchPlaceholder: "Search for a guide, setup, or configuration...", search: "Search", suggestedTopics: "Suggested topics", referenceLibrary: "KNOWLEDGE BASE", solutionsTitle: "My Admin Guides", solutionsIntro: "Browse documented configurations, step-by-step guides, and technical references.", filterSolutions: "Filter guides...", allDomains: "All domains", psTitle: "PowerShell Reference", psIntro: "A small starter set of administration commands, with explanations.", taxonomy: "KNOWLEDGE TAXONOMY", topicsTitle: "Knowledge Domains", topicsIntro: "The coverage map for my personal knowledge base.", projectInfo: "PROJECT INFORMATION", aboutTitle: "About My Playbook", aboutIntro: "A bilingual, rule-based web application for personal technical administration.", architecture: "Architecture", architectureText: "The current release is a static PWA prototype. Its contents are curated JSON knowledge records.", roadmap: "Next steps", roadmap1: "Connect to Firebase for dynamic content.", roadmap2: "Add more detailed AD guides.", footerText: "Personal IT Encyclopedia", noResults: "No matching entries found.", causes: "Prerequisites & Info", steps: "Steps", verify: "Verification", warning: "Safety note", commands: "Related commands", source: "Reference notes", open: "Open", copy: "Copy command", copied: "Copied", readOnly: "Read-only", actionCommand: "Changes system state", all: "All", online: "Online", offline: "Offline Mode"
-    },
-    ar: {
-      appName: "المذيوب", brandSub: "دليل الإدارة الشخصي", workspace: "مساحة العمل", dashboard: "لوحة التحكم", troubleshoot: "البحث في الأدلة", solutions: "قاعدة المعرفة الكاملة", powershell: "مرجع PowerShell", topics: "مجالات المعرفة", system: "النظام", about: "حول التطبيق", offlineReady: "جاهز دون اتصال", credit: "إعداد م. عبد القادر حسين المذيوب", ruleBased: "مرجع شخصي", heroEyebrow: "دليل الإدارة الشخصي", heroTitle: "إدارة باحترافية.<br>وتهيئة بثقة.", heroText: "مرجع تقني شامل لإدارة Active Directory وWindows Server والشبكات والأمن.", startDiagnosis: "ابدأ البحث في أدلتي", overview: "نظرة عامة", knowledgeAtGlance: "قاعدة معرفتي", starterContent: "حزمة الإدارة الشخصية", domains: "مجالات المعرفة", noAiValue: "بدون AI", noAi: "أدلة حتمية", cloudReadyValue: "سحابي", cloudReady: "جاهز للعمل دون اتصال", browse: "تصفح", popularDomains: "مجالات المعرفة", important: "مهم:", noticeText: "هذا التطبيق مرجع شخصي. تحقق دائماً من الأوامر وخذ نسخاً احتياطية قبل إجراء التغييرات.", guidedDiagnosis: "البحث", troubleshootTitle: "ماذا تريد أن تفعل؟", troubleshootIntro: "ابحث في قاعدة المعرفة أو اختر موضوعاً لاتباع دليل إداري منظم.", searchPlaceholder: "ابحث عن دليل، إعداد، أو تهيئة...", search: "بحث", suggestedTopics: "موضوعات مقترحة", referenceLibrary: "قاعدة المعرفة", solutionsTitle: "أدلة الإدارة الخاصة بي", solutionsIntro: "تصفح التهيئات الموثقة، الأدلة خطوة بخطوة، والمراجع التقنية.", filterSolutions: "تصفية الأدلة...", allDomains: "كل المجالات", psTitle: "مرجع PowerShell", psIntro: "مجموعة أولية من أوامر الإدارة مع الشرح.", taxonomy: "تصنيف المعرفة", topicsTitle: "مجالات المعرفة", topicsIntro: "خريطة التغطية لقاعدة معرفتي الشخصية.", projectInfo: "معلومات المشروع", aboutTitle: "حول تطبيق المذيوب", aboutIntro: "تطبيق ويب ثنائي اللغة للإدارة التقنية الشخصية.", architecture: "البنية", architectureText: "الإصدار الحالي نموذج PWA ثابت يعمل دون اتصال. محتوياته سجلات معرفة JSON منتقاة.", roadmap: "الخطوات التالية", roadmap1: "الربط مع Firebase للمحتوى الديناميكي.", roadmap2: "إضافة المزيد من أدلة Active Directory.", footerText: "دليل الإدارة الشخصي", noResults: "لم يتم العثور على نتائج مطابقة.", causes: "المتطلبات والمعلومات", steps: "خطوات التنفيذ", verify: "التحقق", warning: "ملاحظة سلامة", commands: "الأوامر المرتبطة", source: "المراجع", open: "فتح", copy: "نسخ الأمر", copied: "تم النسخ", readOnly: "للقراءة فقط", actionCommand: "يغيّر حالة النظام", all: "الكل", online: "متصل", offline: "وضع عدم الاتصال"
-    }
+    en: { appName: "Al-Mathyoub", brandSub: "Personal Admin Playbook", dashboard: "Dashboard", troubleshoot: "Search Guides", solutions: "Full Knowledge Base", powershell: "PowerShell Reference", topics: "Knowledge Domains", about: "About", online: "Online", offline: "Offline Mode", heroTitle: "Administer with clarity.<br>Configure with confidence.", heroText: "A structured technical knowledge base for Active Directory, Windows Server, and Networking administration.", startDiagnosis: "Search my guides", search: "Search", searchPlaceholder: "Search for a guide...", noResults: "No matching entries found.", allDomains: "All domains", causes: "Prerequisites & Info", steps: "Steps", verify: "Verification", warning: "Safety note", commands: "Related commands", source: "Reference notes", copy: "Copy", copied: "Copied", readOnly: "Read-only", actionCommand: "Changes system state", footerText: "Personal IT Encyclopedia", knowledgeAtGlance: "My Knowledge Base", overview: "OVERVIEW", browse: "BROWSE", popularDomains: "Knowledge Domains", important: "Important:", noticeText: "This is a personal administration reference tool. Always validate commands.", suggestedTopics: "Suggested topics" },
+    ar: { appName: "المذيوب", brandSub: "دليل الإدارة الشخصي", dashboard: "لوحة التحكم", troubleshoot: "البحث في الأدلة", solutions: "قاعدة المعرفة الكاملة", powershell: "مرجع PowerShell", topics: "مجالات المعرفة", about: "حول التطبيق", online: "متصل", offline: "وضع عدم الاتصال", heroTitle: "إدارة باحترافية.<br>وتهيئة بثقة.", heroText: "مرجع تقني شامل لإدارة Active Directory وWindows Server والشبكات والأمن.", startDiagnosis: "ابدأ البحث في أدلتي", search: "بحث", searchPlaceholder: "ابحث عن دليل...", noResults: "لم يتم العثور على نتائج مطابقة.", allDomains: "كل المجالات", causes: "المتطلبات والمعلومات", steps: "خطوات التنفيذ", verify: "التحقق", warning: "ملاحظة سلامة", commands: "الأوامر المرتبطة", source: "المراجع", copy: "نسخ", copied: "تم النسخ", readOnly: "للقراءة فقط", actionCommand: "يغيّر حالة النظام", footerText: "دليل الإدارة الشخصي", knowledgeAtGlance: "قاعدة معرفتي", overview: "نظرة عامة", browse: "تصفح", popularDomains: "مجالات المعرفة", important: "مهم:", noticeText: "هذا التطبيق مرجع شخصي. تحقق دائماً من الأوامر.", suggestedTopics: "موضوعات مقترحة" }
   };
 
   function updateNetworkStatus() {
@@ -57,19 +53,24 @@
     }));
     $("domainFilter").innerHTML=`<option value="all">${t("allDomains")}</option>`+K.domains.map(d=>`<option value="${d.id}">${state.lang==="ar"?d.ar:d.en}</option>`).join("");
   }
-  
-  // دالة بحث محسنة (تقسم الجملة لكلمات)
+
   function isMatch(text, query) {
     if (!query) return true;
-    // إزالة كلمات الحشو الشائعة لتسهيل البحث
+    const normalizedText = text.toLowerCase();
+    const normalizedQuery = query.toLowerCase().trim();
+    
+    if (normalizedText.includes(normalizedQuery)) return true;
+    
     const stopWords = ["كيفية", "طريقة", "شرح", "ما", "هي", "هو", "في", "من", "على", "عن", "إلى", "كيف", "how", "to", "the", "a", "an"];
-    const queryWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 1 && !stopWords.includes(w));
+    const queryWords = normalizedQuery.split(/\s+/).filter(w => w.length > 1 && !stopWords.includes(w));
     
-    if (queryWords.length === 0) return text.includes(query.toLowerCase());
+    if (queryWords.length === 0) return false;
     
-    // التحقق من وجود كل كلمة (أو معظمها) في النص
-    const matches = queryWords.filter(word => text.includes(word));
-    return matches.length > 0; // يكفي أن تطابق كلمة واحدة قوية
+    let matchCount = 0;
+    for (const word of queryWords) {
+      if (normalizedText.includes(word)) matchCount++;
+    }
+    return matchCount >= Math.ceil(queryWords.length / 2);
   }
 
   function renderSolutions(query=""){
@@ -77,7 +78,6 @@
     const matches=K.solutions.filter(s=>{
       if (domain !== "all" && s.domain !== domain) return false;
       if (!query) return true;
-      
       const searchableText = [s.id, s.titleEn, s.titleAr, s.summaryEn, s.summaryAr, ...(s.symptoms||[]), ...(s.causesEn||[]), ...(s.causesAr||[])].join(" ").toLowerCase();
       return isMatch(searchableText, query);
     });
@@ -106,11 +106,9 @@
     $("diagnosisDetail").scrollIntoView({behavior:"smooth",block:"start"});
   }
   
-  // دالة البحث الرئيسية المحسنة
   function runSearch(){
     const q=$("problemSearch").value.trim();
     if(!q) return;
-
     const matches=K.solutions.filter(s=>{
       const searchableText = [s.id, s.titleEn, s.titleAr, s.summaryEn, s.summaryAr, ...(s.symptoms||[]), ...(s.causesEn||[]), ...(s.causesAr||[])].join(" ").toLowerCase();
       return isMatch(searchableText, q);
