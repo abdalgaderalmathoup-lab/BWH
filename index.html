@@ -4,116 +4,134 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10233f">
-  <meta name="description" content="BWH — bilingual, rule-based Active Directory and Windows Server troubleshooting knowledge system.">
-  <title>BWH | IT Troubleshooting Knowledge System</title>
+  <meta name="description" content="المذيوب — دليل الإدارة الشخصي للمهندس عبد القادر حسين المذيوب.">
+  <title>المذيوب | دليل الإدارة الشخصي</title>
   <link rel="manifest" href="manifest.json">
-  <!-- تم تعديل مسار الأيقونة -->
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <!-- تم تعديل مسار ملف التصميم -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app-shell">
+    <!-- القائمة الجانبية -->
     <aside class="sidebar" id="sidebar">
-      <a class="brand" href="#" aria-label="BWH home">
-        <span class="brand-mark">B</span>
-        <span><strong>BWH</strong><small data-i18n="brandSub">Knowledge & Troubleshooting</small></span>
+      <a class="brand" href="#" aria-label="Home">
+        <span class="brand-mark">م</span>
+        <span><strong data-i18n="appName">المذيوب</strong><small data-i18n="brandSub">دليل الإدارة الشخصي</small></span>
       </a>
-      <div class="side-label" data-i18n="workspace">WORKSPACE</div>
+      <div class="side-label" data-i18n="workspace">مساحة العمل</div>
       <nav class="nav-list">
-        <button class="nav-item active" data-view="dashboard"><span>▦</span><span data-i18n="dashboard">Dashboard</span></button>
-        <button class="nav-item" data-view="troubleshoot"><span>⌕</span><span data-i18n="troubleshoot">Troubleshooting</span></button>
-        <button class="nav-item" data-view="solutions"><span>▤</span><span data-i18n="solutions">Solution library</span></button>
-        <button class="nav-item" data-view="powershell"><span>›_</span><span data-i18n="powershell">PowerShell reference</span></button>
-        <button class="nav-item" data-view="topics"><span>◈</span><span data-i18n="topics">Knowledge domains</span></button>
+        <button class="nav-item active" data-view="dashboard"><span>▦</span><span data-i18n="dashboard">لوحة التحكم</span></button>
+        <button class="nav-item" data-view="troubleshoot"><span>⌕</span><span data-i18n="troubleshoot">البحث في الأدلة</span></button>
+        <button class="nav-item" data-view="solutions"><span>▤</span><span data-i18n="solutions">قاعدة المعرفة الكاملة</span></button>
+        <button class="nav-item" data-view="powershell"><span>›_</span><span data-i18n="powershell">مرجع PowerShell</span></button>
+        <button class="nav-item" data-view="topics"><span>◈</span><span data-i18n="topics">مجالات المعرفة</span></button>
       </nav>
-      <div class="side-label" data-i18n="system">SYSTEM</div>
+      <div class="side-label" data-i18n="system">النظام</div>
       <nav class="nav-list">
-        <button class="nav-item" data-view="about"><span>ⓘ</span><span data-i18n="about">About BWH</span></button>
+        <button class="nav-item" data-view="about"><span>ⓘ</span><span data-i18n="about">حول التطبيق</span></button>
       </nav>
-      <div class="sidebar-foot"><span class="status-dot"></span><span data-i18n="offlineReady">Offline-ready interface</span></div>
+      <div class="sidebar-foot">
+        <span class="status-dot"></span>
+        <span data-i18n="credit">إعداد م. عبد القادر حسين المذيوب</span>
+      </div>
     </aside>
 
+    <!-- المحتوى الرئيسي -->
     <main class="main">
       <header class="topbar">
         <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Menu">☰</button>
-        <div class="crumb"><span>BWH</span><span class="crumb-sep">/</span><strong id="pageTitle">Dashboard</strong></div>
+        <div class="crumb"><span data-i18n="appName">المذيوب</span><span class="crumb-sep">/</span><strong id="pageTitle">لوحة التحكم</strong></div>
         <div class="top-actions">
-          <span class="mode-chip"><i></i><span data-i18n="ruleBased">Rule-based engine</span></span>
-          <button class="lang-btn" id="langBtn" aria-label="Switch language">العربية</button>
+          <span class="mode-chip" id="networkStatus" style="background:#e2e8f0; color:#475569;">
+            <i></i><span>Checking...</span>
+          </span>
+          <button class="lang-btn" id="langBtn" aria-label="Switch language">English</button>
         </div>
       </header>
 
+      <!-- لوحة التحكم -->
       <section class="view active" id="view-dashboard">
         <div class="hero">
           <div>
-            <div class="eyebrow" data-i18n="heroEyebrow">INDEPENDENT KNOWLEDGE PLATFORM</div>
-            <h1 data-i18n="heroTitle">Troubleshoot with clarity.<br>Resolve with confidence.</h1>
-            <p data-i18n="heroText">A structured technical knowledge system for Active Directory, Windows Server, networking and security.</p>
-            <button class="primary-btn" data-go="troubleshoot" data-i18n="startDiagnosis">Start troubleshooting <span>→</span></button>
+            <div class="eyebrow" data-i18n="heroEyebrow">دليل الإدارة الشخصي</div>
+            <h1 data-i18n="heroTitle">إدارة باحترافية.<br>وتهيئة بثقة.</h1>
+            
+            <!-- التوقيع الشخصي -->
+            <div class="credit-banner">
+              <h3>إعداد المهندس / عبد القادر حسين المذيوب</h3>
+              <p>مهندس أمن المعلومة</p>
+            </div>
+            
+            <p data-i18n="heroText">مرجع تقني شامل لإدارة Active Directory وWindows Server والشبكات والأمن.</p>
+            <button class="primary-btn" data-go="troubleshoot" data-i18n="startDiagnosis">ابدأ البحث في أدلتي <span>→</span></button>
           </div>
           <div class="hero-art" aria-hidden="true">
             <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-            <div class="core">BWH<span>RULES</span></div>
+            <div class="core">م<span>ADMIN</span></div>
             <b class="node node-a">AD</b><b class="node node-b">DNS</b><b class="node node-c">GPO</b><b class="node node-d">PS</b>
           </div>
         </div>
 
-        <div class="section-head"><div><div class="eyebrow" data-i18n="overview">OVERVIEW</div><h2 data-i18n="knowledgeAtGlance">Knowledge at a glance</h2></div><span class="subtle" data-i18n="starterContent">Starter knowledge pack</span></div>
+        <div class="section-head"><div><div class="eyebrow" data-i18n="overview">نظرة عامة</div><h2 data-i18n="knowledgeAtGlance">قاعدة معرفتي</h2></div><span class="subtle" data-i18n="starterContent">حزمة الإدارة الشخصية</span></div>
         <div class="stats-grid">
-          <article class="stat-card"><span class="stat-icon blue">▤</span><div><strong id="statSolutions">0</strong><small data-i18n="solutions">Solution library</small></div></article>
-          <article class="stat-card"><span class="stat-icon purple">⌘</span><div><strong id="statDomains">0</strong><small data-i18n="domains">Knowledge domains</small></div></article>
-          <article class="stat-card"><span class="stat-icon green">✓</span><div><strong data-i18n="noAiValue">No AI</strong><small data-i18n="noAi">Deterministic rule engine</small></div></article>
-          <article class="stat-card"><span class="stat-icon amber">☁</span><div><strong data-i18n="cloudReadyValue">Cloud</strong><small data-i18n="cloudReady">Static-hosting ready</small></div></article>
+          <article class="stat-card"><span class="stat-icon blue">▤</span><div><strong id="statSolutions">0</strong><small data-i18n="solutions">أدلة الإدارة</small></div></article>
+          <article class="stat-card"><span class="stat-icon purple">⌘</span><div><strong id="statDomains">0</strong><small data-i18n="domains">مجالات المعرفة</small></div></article>
+          <article class="stat-card"><span class="stat-icon green">✓</span><div><strong data-i18n="noAiValue">بدون AI</strong><small data-i18n="noAi">أدلة حتمية</small></div></article>
+          <article class="stat-card"><span class="stat-icon amber">☁</span><div><strong data-i18n="cloudReadyValue">سحابي</strong><small data-i18n="cloudReady">جاهز للعمل دون اتصال</small></div></article>
         </div>
 
-        <div class="section-head"><div><div class="eyebrow" data-i18n="browse">BROWSE</div><h2 data-i18n="popularDomains">Knowledge domains</h2></div></div>
+        <div class="section-head"><div><div class="eyebrow" data-i18n="browse">تصفح</div><h2 data-i18n="popularDomains">مجالات المعرفة</h2></div></div>
         <div class="domain-grid" id="domainGrid"></div>
-        <div class="notice"><strong data-i18n="important">Important:</strong> <span data-i18n="noticeText">BWH is an independent reference and diagnostic guide. It does not connect to, inspect, or modify your Active Directory environment. Always validate commands and back up systems before making changes.</span></div>
+        <div class="notice"><strong data-i18n="important">مهم:</strong> <span data-i18n="noticeText">هذا التطبيق مرجع شخصي. تحقق دائماً من الأوامر وخذ نسخاً احتياطية قبل إجراء التغييرات.</span></div>
       </section>
 
+      <!-- صفحة البحث -->
       <section class="view" id="view-troubleshoot">
-        <div class="page-intro"><div class="eyebrow" data-i18n="guidedDiagnosis">GUIDED DIAGNOSIS</div><h1 data-i18n="troubleshootTitle">What problem are you facing?</h1><p data-i18n="troubleshootIntro">Search the knowledge base or select a symptom to follow a structured diagnostic path.</p></div>
+        <div class="page-intro"><div class="eyebrow" data-i18n="guidedDiagnosis">البحث</div><h1 data-i18n="troubleshootTitle">ماذا تريد أن تفعل؟</h1><p data-i18n="troubleshootIntro">ابحث في قاعدة المعرفة أو اختر موضوعاً لاتباع دليل إداري منظم.</p></div>
         <div class="search-panel">
           <span class="search-symbol">⌕</span>
-          <input id="problemSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Describe an error, symptom, event ID or topic...">
-          <button class="primary-btn" id="searchBtn" data-i18n="search">Search</button>
+          <input id="problemSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="ابحث عن دليل، إعداد، أو تهيئة...">
+          <button class="primary-btn" id="searchBtn" data-i18n="search">بحث</button>
         </div>
-        <div class="filter-row"><span data-i18n="suggestedTopics">Suggested topics</span><div id="quickTopics" class="quick-topics"></div></div>
+        <div class="filter-row"><span data-i18n="suggestedTopics">موضوعات مقترحة</span><div id="quickTopics" class="quick-topics"></div></div>
         <div id="diagnosisResults" class="results-list"></div>
         <div id="diagnosisDetail"></div>
       </section>
 
+      <!-- صفحة قاعدة المعرفة -->
       <section class="view" id="view-solutions">
-        <div class="page-intro"><div class="eyebrow" data-i18n="referenceLibrary">REFERENCE LIBRARY</div><h1 data-i18n="solutionsTitle">Solution library</h1><p data-i18n="solutionsIntro">Browse documented symptoms, causes, diagnostic steps and remediation guidance.</p></div>
-        <div class="toolbar"><input id="librarySearch" type="search" data-i18n-placeholder="filterSolutions" placeholder="Filter solutions..."><select id="domainFilter" aria-label="Filter by domain"><option value="all" data-i18n="allDomains">All domains</option></select></div>
+        <div class="page-intro"><div class="eyebrow" data-i18n="referenceLibrary">قاعدة المعرفة</div><h1 data-i18n="solutionsTitle">أدلة الإدارة الخاصة بي</h1><p data-i18n="solutionsIntro">تصفح التهيئات الموثقة، الأدلة خطوة بخطوة، والمراجع التقنية.</p></div>
+        <div class="toolbar"><input id="librarySearch" type="search" data-i18n-placeholder="filterSolutions" placeholder="تصفية الأدلة..."><select id="domainFilter" aria-label="Filter by domain"><option value="all" data-i18n="allDomains">كل المجالات</option></select></div>
         <div id="solutionGrid" class="solution-grid"></div>
       </section>
 
+      <!-- صفحة PowerShell -->
       <section class="view" id="view-powershell">
-        <div class="page-intro"><div class="eyebrow">POWERSHELL</div><h1 data-i18n="psTitle">PowerShell reference</h1><p data-i18n="psIntro">A small starter set of read-only diagnostic commands, with explanations and safety notes.</p></div>
+        <div class="page-intro"><div class="eyebrow">POWERSHELL</div><h1 data-i18n="psTitle">مرجع PowerShell</h1><p data-i18n="psIntro">مجموعة أولية من أوامر الإدارة مع الشرح.</p></div>
         <div id="commandList" class="command-list"></div>
       </section>
 
+      <!-- صفحة المجالات -->
       <section class="view" id="view-topics">
-        <div class="page-intro"><div class="eyebrow" data-i18n="taxonomy">KNOWLEDGE TAXONOMY</div><h1 data-i18n="topicsTitle">Knowledge domains</h1><p data-i18n="topicsIntro">The planned coverage map for the BWH knowledge base.</p></div>
+        <div class="page-intro"><div class="eyebrow" data-i18n="taxonomy">تصنيف المعرفة</div><h1 data-i18n="topicsTitle">مجالات المعرفة</h1><p data-i18n="topicsIntro">خريطة التغطية لقاعدة معرفتي الشخصية.</p></div>
         <div id="allDomains" class="domain-grid"></div>
       </section>
 
+      <!-- صفحة حول -->
       <section class="view" id="view-about">
-        <div class="page-intro"><div class="eyebrow" data-i18n="projectInfo">PROJECT INFORMATION</div><h1 data-i18n="aboutTitle">About BWH</h1><p data-i18n="aboutIntro">BWH is a bilingual, rule-based web application for technical troubleshooting education and reference.</p></div>
+        <div class="page-intro"><div class="eyebrow" data-i18n="projectInfo">معلومات المشروع</div><h1 data-i18n="aboutTitle">حول تطبيق المذيوب</h1><p data-i18n="aboutIntro">تطبيق ويب ثنائي اللغة للإدارة التقنية الشخصية.</p></div>
         <div class="about-grid">
-          <article class="panel"><h3 data-i18n="architecture">Architecture</h3><p data-i18n="architectureText">The current release is a static PWA prototype. Its diagnostic decisions are explicit JavaScript rules and curated JSON knowledge records. No AI model is included.</p></article>
-          <article class="panel"><h3 data-i18n="cloudDeployment">Cloud deployment</h3><p data-i18n="cloudText">Deploy the folder to any HTTPS static hosting provider. HTTPS is required for service worker installation in production (localhost is also supported for development).</p></article>
-          <article class="panel"><h3 data-i18n="roadmap">Next development steps</h3><ul><li data-i18n="roadmap1">Expand and verify the technical knowledge base.</li><li data-i18n="roadmap2">Add references and version metadata to each solution.</li><li data-i18n="roadmap3">Add optional user accounts and cloud synchronization only if needed.</li></ul></article>
-          <article class="panel"><h3 data-i18n="boundaries">Safety boundaries</h3><p data-i18n="boundariesText">Commands are guidance only. BWH does not execute commands, request domain credentials, or establish a connection to company infrastructure.</p></article>
+          <article class="panel"><h3 data-i18n="architecture">البنية</h3><p data-i18n="architectureText">الإصدار الحالي نموذج PWA ثابت يعمل دون اتصال. محتوياته سجلات معرفة JSON منتقاة.</p></article>
+          <article class="panel"><h3 data-i18n="roadmap">الخطوات التالية</h3><ul><li data-i18n="roadmap1">الربط مع Firebase للمحتوى الديناميكي.</li><li data-i18n="roadmap2">إضافة المزيد من أدلة Active Directory.</li></ul></article>
         </div>
       </section>
 
-      <footer class="footer"><span>© 2026 BWH</span><span data-i18n="footerText">Independent troubleshooting knowledge system · Version 0.1.0</span></footer>
+      <footer class="footer">
+        <span>© 2026 المذيوب</span>
+        <span>إعداد المهندس عبد القادر حسين المذيوب - مهندس أمن المعلومة</span>
+      </footer>
     </main>
   </div>
-  <!-- تم تعديل مسارات ملفات الجافاسكريبت -->
   <script src="knowledge.js"></script>
   <script src="app.js"></script>
 </body>
