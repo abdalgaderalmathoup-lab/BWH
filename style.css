@@ -16,7 +16,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 .brand small { font-size: 12px; opacity: 0.7; }
 .side-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.5; margin: 20px 0 10px 10px; }
 .nav-list { display: flex; flex-direction: column; gap: 5px; }
-.nav-item { background: none; border: none; color: rgba(255,255,255,0.7); padding: 12px; text-align: left; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 15px; transition: 0.2s; }
+.nav-item { background: none; border: none; color: rgba(255,255,255,0.7); padding: 12px; text-align: right; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 15px; transition: 0.2s; }
 .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: white; }
 .sidebar-foot { margin-top: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; opacity: 0.7; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
 .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; }
@@ -69,8 +69,31 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 .domain-count { font-size: 12px; font-weight: bold; color: var(--primary-light); }
 
 /* Search & Solutions */
-.search-panel { display: flex; background: var(--surface); padding: 10px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; }
-.search-panel input { flex: 1; border: none; padding: 10px; font-size: 16px; outline: none; }
+.search-panel { 
+  display: flex; 
+  background: var(--surface); 
+  padding: 8px; 
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow); 
+  margin-bottom: 20px; 
+  gap: 10px;
+  align-items: center;
+}
+.search-symbol { padding-right: 10px; color: var(--muted); }
+.search-panel input { 
+  flex: 1; 
+  min-width: 0; 
+  border: none; 
+  padding: 10px; 
+  font-size: 16px; 
+  outline: none; 
+  background: transparent;
+}
+.search-panel .primary-btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  white-space: nowrap;
+}
 .result-row, .solution-card { background: var(--surface); padding: 20px; border-radius: var(--radius); margin-bottom: 15px; cursor: pointer; box-shadow: var(--shadow); border-right: 4px solid transparent; }
 .result-row:hover, .solution-card:hover { border-right-color: var(--accent); }
 .tag { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
