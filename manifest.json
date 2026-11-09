@@ -1,0 +1,19 @@
+{
+  "name": "BWH — Intelligent AD Solutions",
+  "short_name": "BWH",
+  "description": "Bilingual rule-based Active Directory and Windows Server troubleshooting knowledge system.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#10233f",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

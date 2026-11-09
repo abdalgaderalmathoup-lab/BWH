@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10233f">
+  <meta name="description" content="BWH — bilingual, rule-based Active Directory and Windows Server troubleshooting knowledge system.">
+  <title>BWH | IT Troubleshooting Knowledge System</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="BWH home">
+        <span class="brand-mark">B</span>
+        <span><strong>BWH</strong><small data-i18n="brandSub">Knowledge & Troubleshooting</small></span>
+      </a>
+      <div class="side-label" data-i18n="workspace">WORKSPACE</div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span><span data-i18n="dashboard">Dashboard</span></button>
+        <button class="nav-item" data-view="troubleshoot"><span>⌕</span><span data-i18n="troubleshoot">Troubleshooting</span></button>
+        <button class="nav-item" data-view="solutions"><span>▤</span><span data-i18n="solutions">Solution library</span></button>
+        <button class="nav-item" data-view="powershell"><span>›_</span><span data-i18n="powershell">PowerShell reference</span></button>
+        <button class="nav-item" data-view="topics"><span>◈</span><span data-i18n="topics">Knowledge domains</span></button>
+      </nav>
+      <div class="side-label" data-i18n="system">SYSTEM</div>
+      <nav class="nav-list">
+        <button class="nav-item" data-view="about"><span>ⓘ</span><span data-i18n="about">About BWH</span></button>
+      </nav>
+      <div class="sidebar-foot"><span class="status-dot"></span><span data-i18n="offlineReady">Offline-ready interface</span></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Menu">☰</button>
+        <div class="crumb"><span>BWH</span><span class="crumb-sep">/</span><strong id="pageTitle">Dashboard</strong></div>
+        <div class="top-actions">
+          <span class="mode-chip"><i></i><span data-i18n="ruleBased">Rule-based engine</span></span>
+          <button class="lang-btn" id="langBtn" aria-label="Switch language">العربية</button>
+        </div>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="hero">
+          <div>
+            <div class="eyebrow" data-i18n="heroEyebrow">INDEPENDENT KNOWLEDGE PLATFORM</div>
+            <h1 data-i18n="heroTitle">Troubleshoot with clarity.<br>Resolve with confidence.</h1>
+            <p data-i18n="heroText">A structured technical knowledge system for Active Directory, Windows Server, networking and security.</p>
+            <button class="primary-btn" data-go="troubleshoot" data-i18n="startDiagnosis">Start troubleshooting <span>→</span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="core">BWH<span>RULES</span></div>
+            <b class="node node-a">AD</b><b class="node node-b">DNS</b><b class="node node-c">GPO</b><b class="node node-d">PS</b>
+          </div>
+        </div>
+
+        <div class="section-head"><div><div class="eyebrow" data-i18n="overview">OVERVIEW</div><h2 data-i18n="knowledgeAtGlance">Knowledge at a glance</h2></div><span class="subtle" data-i18n="starterContent">Starter knowledge pack</span></div>
+        <div class="stats-grid">
+          <article class="stat-card"><span class="stat-icon blue">▤</span><div><strong id="statSolutions">0</strong><small data-i18n="solutions">Solution library</small></div></article>
+          <article class="stat-card"><span class="stat-icon purple">⌘</span><div><strong id="statDomains">0</strong><small data-i18n="domains">Knowledge domains</small></div></article>
+          <article class="stat-card"><span class="stat-icon green">✓</span><div><strong data-i18n="noAiValue">No AI</strong><small data-i18n="noAi">Deterministic rule engine</small></div></article>
+          <article class="stat-card"><span class="stat-icon amber">☁</span><div><strong data-i18n="cloudReadyValue">Cloud</strong><small data-i18n="cloudReady">Static-hosting ready</small></div></article>
+        </div>
+
+        <div class="section-head"><div><div class="eyebrow" data-i18n="browse">BROWSE</div><h2 data-i18n="popularDomains">Knowledge domains</h2></div></div>
+        <div class="domain-grid" id="domainGrid"></div>
+        <div class="notice"><strong data-i18n="important">Important:</strong> <span data-i18n="noticeText">BWH is an independent reference and diagnostic guide. It does not connect to, inspect, or modify your Active Directory environment. Always validate commands and back up systems before making changes.</span></div>
+      </section>
+
+      <section class="view" id="view-troubleshoot">
+        <div class="page-intro"><div class="eyebrow" data-i18n="guidedDiagnosis">GUIDED DIAGNOSIS</div><h1 data-i18n="troubleshootTitle">What problem are you facing?</h1><p data-i18n="troubleshootIntro">Search the knowledge base or select a symptom to follow a structured diagnostic path.</p></div>
+        <div class="search-panel">
+          <span class="search-symbol">⌕</span>
+          <input id="problemSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Describe an error, symptom, event ID or topic...">
+          <button class="primary-btn" id="searchBtn" data-i18n="search">Search</button>
+        </div>
+        <div class="filter-row"><span data-i18n="suggestedTopics">Suggested topics</span><div id="quickTopics" class="quick-topics"></div></div>
+        <div id="diagnosisResults" class="results-list"></div>
+        <div id="diagnosisDetail"></div>
+      </section>
+
+      <section class="view" id="view-solutions">
+        <div class="page-intro"><div class="eyebrow" data-i18n="referenceLibrary">REFERENCE LIBRARY</div><h1 data-i18n="solutionsTitle">Solution library</h1><p data-i18n="solutionsIntro">Browse documented symptoms, causes, diagnostic steps and remediation guidance.</p></div>
+        <div class="toolbar"><input id="librarySearch" type="search" data-i18n-placeholder="filterSolutions" placeholder="Filter solutions..."><select id="domainFilter" aria-label="Filter by domain"><option value="all" data-i18n="allDomains">All domains</option></select></div>
+        <div id="solutionGrid" class="solution-grid"></div>
+      </section>
+
+      <section class="view" id="view-powershell">
+        <div class="page-intro"><div class="eyebrow">POWERSHELL</div><h1 data-i18n="psTitle">PowerShell reference</h1><p data-i18n="psIntro">A small starter set of read-only diagnostic commands, with explanations and safety notes.</p></div>
+        <div id="commandList" class="command-list"></div>
+      </section>
+
+      <section class="view" id="view-topics">
+        <div class="page-intro"><div class="eyebrow" data-i18n="taxonomy">KNOWLEDGE TAXONOMY</div><h1 data-i18n="topicsTitle">Knowledge domains</h1><p data-i18n="topicsIntro">The planned coverage map for the BWH knowledge base.</p></div>
+        <div id="allDomains" class="domain-grid"></div>
+      </section>
+
+      <section class="view" id="view-about">
+        <div class="page-intro"><div class="eyebrow" data-i18n="projectInfo">PROJECT INFORMATION</div><h1 data-i18n="aboutTitle">About BWH</h1><p data-i18n="aboutIntro">BWH is a bilingual, rule-based web application for technical troubleshooting education and reference.</p></div>
+        <div class="about-grid">
+          <article class="panel"><h3 data-i18n="architecture">Architecture</h3><p data-i18n="architectureText">The current release is a static PWA prototype. Its diagnostic decisions are explicit JavaScript rules and curated JSON knowledge records. No AI model is included.</p></article>
+          <article class="panel"><h3 data-i18n="cloudDeployment">Cloud deployment</h3><p data-i18n="cloudText">Deploy the folder to any HTTPS static hosting provider. HTTPS is required for service worker installation in production (localhost is also supported for development).</p></article>
+          <article class="panel"><h3 data-i18n="roadmap">Next development steps</h3><ul><li data-i18n="roadmap1">Expand and verify the technical knowledge base.</li><li data-i18n="roadmap2">Add references and version metadata to each solution.</li><li data-i18n="roadmap3">Add optional user accounts and cloud synchronization only if needed.</li></ul></article>
+          <article class="panel"><h3 data-i18n="boundaries">Safety boundaries</h3><p data-i18n="boundariesText">Commands are guidance only. BWH does not execute commands, request domain credentials, or establish a connection to company infrastructure.</p></article>
+        </div>
+      </section>
+
+      <footer class="footer"><span>© 2026 BWH</span><span data-i18n="footerText">Independent troubleshooting knowledge system · Version 0.1.0</span></footer>
+    </main>
+  </div>
+  <script src="assets/js/knowledge.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
