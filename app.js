@@ -6,8 +6,8 @@
   const field = (obj, base) => obj[base + (state.lang === "ar" ? "Ar" : "En")] || obj[base + "En"] || "";
 
   const I18N = {
-    en: { appName: "Al-Mathyoub", brandSub: "Personal Admin Playbook", dashboard: "Dashboard", troubleshoot: "Search Guides", solutions: "Full Knowledge Base", powershell: "PowerShell Reference", topics: "Knowledge Domains", about: "About", online: "Online", offline: "Offline Mode", heroTitle: "Administer with clarity.<br>Configure with confidence.", heroText: "A structured technical knowledge base for Active Directory, Windows Server, and Networking administration.", startDiagnosis: "Search my guides", search: "Search", searchPlaceholder: "Search for a guide...", noResults: "No matching entries found.", allDomains: "All domains", causes: "Prerequisites & Info", steps: "Steps", verify: "Verification", warning: "Safety note", commands: "Related commands", source: "Reference notes", copy: "Copy", copied: "Copied", readOnly: "Read-only", actionCommand: "Changes system state", footerText: "Personal IT Encyclopedia", knowledgeAtGlance: "My Knowledge Base", overview: "OVERVIEW", browse: "BROWSE", popularDomains: "Knowledge Domains", important: "Important:", noticeText: "This is a personal administration reference tool. Always validate commands.", suggestedTopics: "Suggested topics" },
-    ar: { appName: "المذيوب", brandSub: "دليل الإدارة الشخصي", dashboard: "لوحة التحكم", troubleshoot: "البحث في الأدلة", solutions: "قاعدة المعرفة الكاملة", powershell: "مرجع PowerShell", topics: "مجالات المعرفة", about: "حول التطبيق", online: "متصل", offline: "وضع عدم الاتصال", heroTitle: "إدارة باحترافية.<br>وتهيئة بثقة.", heroText: "مرجع تقني شامل لإدارة Active Directory وWindows Server والشبكات والأمن.", startDiagnosis: "ابدأ البحث في أدلتي", search: "بحث", searchPlaceholder: "ابحث عن دليل...", noResults: "لم يتم العثور على نتائج مطابقة.", allDomains: "كل المجالات", causes: "المتطلبات والمعلومات", steps: "خطوات التنفيذ", verify: "التحقق", warning: "ملاحظة سلامة", commands: "الأوامر المرتبطة", source: "المراجع", copy: "نسخ", copied: "تم النسخ", readOnly: "للقراءة فقط", actionCommand: "يغيّر حالة النظام", footerText: "دليل الإدارة الشخصي", knowledgeAtGlance: "قاعدة معرفتي", overview: "نظرة عامة", browse: "تصفح", popularDomains: "مجالات المعرفة", important: "مهم:", noticeText: "هذا التطبيق مرجع شخصي. تحقق دائماً من الأوامر.", suggestedTopics: "موضوعات مقترحة" }
+    en: { appName: "Al-Mathyoub", brandSub: "Personal Admin Playbook", dashboard: "Dashboard", troubleshoot: "Search Guides", solutions: "Full Knowledge Base", powershell: "PowerShell Reference", topics: "Knowledge Domains", about: "About", online: "Online", offline: "Offline Mode", clearCache: "Clear Cache (Update)", heroTitle: "Administer with clarity.<br>Configure with confidence.", heroText: "A structured technical knowledge base for Active Directory, Windows Server, and Networking administration.", startDiagnosis: "Search my guides", search: "Search", searchPlaceholder: "Search for a guide...", noResults: "No matching entries found.", allDomains: "All domains", causes: "Prerequisites & Info", steps: "Steps", verify: "Verification", warning: "Safety note", commands: "Related commands", source: "Reference notes", copy: "Copy", copied: "Copied", readOnly: "Read-only", actionCommand: "Changes system state", footerText: "Personal IT Encyclopedia", knowledgeAtGlance: "My Knowledge Base", overview: "OVERVIEW", browse: "BROWSE", popularDomains: "Knowledge Domains", important: "Important:", noticeText: "This is a personal administration reference tool. Always validate commands.", suggestedTopics: "Suggested topics" },
+    ar: { appName: "المذيوب", brandSub: "دليل الإدارة الشخصي", dashboard: "لوحة التحكم", troubleshoot: "البحث في الأدلة", solutions: "قاعدة المعرفة الكاملة", powershell: "مرجع PowerShell", topics: "مجالات المعرفة", about: "حول التطبيق", online: "متصل", offline: "وضع عدم الاتصال", clearCache: "تنظيف الكاش (تحديث)", heroTitle: "إدارة باحترافية.<br>وتهيئة بثقة.", heroText: "مرجع تقني شامل لإدارة Active Directory وWindows Server والشبكات والأمن.", startDiagnosis: "ابدأ البحث في أدلتي", search: "بحث", searchPlaceholder: "ابحث عن دليل...", noResults: "لم يتم العثور على نتائج مطابقة.", allDomains: "كل المجالات", causes: "المتطلبات والمعلومات", steps: "خطوات التنفيذ", verify: "التحقق", warning: "ملاحظة سلامة", commands: "الأوامر المرتبطة", source: "المراجع", copy: "نسخ", copied: "تم النسخ", readOnly: "للقراءة فقط", actionCommand: "يغيّر حالة النظام", footerText: "دليل الإدارة الشخصي", knowledgeAtGlance: "قاعدة معرفتي", overview: "نظرة عامة", browse: "تصفح", popularDomains: "مجالات المعرفة", important: "مهم:", noticeText: "هذا التطبيق مرجع شخصي. تحقق دائماً من الأوامر.", suggestedTopics: "موضوعات مقترحة" }
   };
 
   function updateNetworkStatus() {
@@ -54,14 +54,11 @@
     $("domainFilter").innerHTML=`<option value="all">${t("allDomains")}</option>`+K.domains.map(d=>`<option value="${d.id}">${state.lang==="ar"?d.ar:d.en}</option>`).join("");
   }
 
-  // بحث شامل جداً: يحول كامل الدليل إلى نص ويبحث فيه
   function isMatch(obj, query) {
     if (!query) return true;
     const fullText = JSON.stringify(obj).toLowerCase();
     const words = query.toLowerCase().split(/\s+/).filter(w => w.length > 1);
     if (words.length === 0) return fullText.includes(query.toLowerCase());
-    
-    // إذا وجد أي كلمة من كلمات البحث، يعرض الدليل
     return words.some(word => fullText.includes(word));
   }
 
@@ -83,7 +80,7 @@
   }
   
   function renderCommands(){
-    $("commandList").innerHTML=K.commands.map((c,i)=>`<article class="command-card solution-card" style="cursor:default"><div class="command-head" style="display:flex;justify-content:space-between"><h3>${state.lang==="ar"?c.titleAr:c.titleEn}</h3><button class="tag" data-copy="${i}" style="cursor:pointer">${t("copy")}</button></div><p>${state.lang==="ar"?c.descAr:c.descEn}</p><pre style="background:#1e293b;color:#f8fafc;padding:10px;border-radius:8px;overflow-x:auto;"><code>${escapeHtml(c.cmd)}</code></pre><span class="tag">${c.safe?t("readOnly"):t("actionCommand")}</span></article>`).join("");
+    $("commandList").innerHTML=K.commands.map((c,i)=>`<article class="command-card solution-card" style="cursor:default"><div class="command-head" style="display:flex;justify-content:space-between"><h3>${state.lang==="ar"?c.titleAr:c.titleEn}</h3><button class="tag" data-copy="${i}" style="cursor:pointer">${t("copy")}</button></div><p>${state.lang==="ar"?c.descAr:c.descEn}</p><pre style="background:#1e293b;color:#f8fafc;padding:16px;border-radius:12px;overflow-x:auto;font-family:monospace;font-size:14px;"><code>${escapeHtml(c.cmd)}</code></pre><span class="tag">${c.safe?t("readOnly"):t("actionCommand")}</span></article>`).join("");
     document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{const c=K.commands[Number(b.dataset.copy)];try{await navigator.clipboard.writeText(c.cmd);b.textContent=t("copied");setTimeout(()=>b.textContent=t("copy"),1200);}catch{b.textContent=c.cmd;}}));
   }
   
@@ -123,6 +120,34 @@
   $("domainFilter").addEventListener("change",()=>renderSolutions($("librarySearch").value));
   $("menuBtn").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
   
+  // كود زر تنظيف الكاش
+  $("clearCacheBtn").addEventListener("click", () => {
+    const msg = state.lang === "ar" 
+      ? "هل أنت متأكد من مسح الكاش وإعادة تحميل التطبيق؟ سيتم تحميل أحدث نسخة." 
+      : "Are you sure you want to clear cache and reload? The latest version will be downloaded.";
+      
+    if (confirm(msg)) {
+      // مسح الكاش الخاص بالمتصفح
+      caches.keys().then((names) => {
+        for (let name of names) caches.delete(name);
+      });
+      
+      // إلغاء تسجيل الـ Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+      
+      // إعادة تحميل الصفحة بعد نصف ثانية لضمان المسح
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 500);
+    }
+  });
+
   window.addEventListener("online", updateNetworkStatus);
   window.addEventListener("offline", updateNetworkStatus);
 
