@@ -1,4 +1,4 @@
-const CACHE_NAME = "bwh-cache-v6"; // تحديث الإصدار لتفعيل الكاش الجديد
+const CACHE_NAME = "bwh-cache-v8"; // تحديث الإصدار لتفعيل الكاش الجديد
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
